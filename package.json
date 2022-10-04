@@ -1,0 +1,22 @@
+{
+   "name": "file-tools",
+   "version": "1.0.0",
+   "description": "A package of easy to use tools for interacting with files using javascript",
+   "main": "index.js",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "keywords": [
+      "acegoal07",
+      "file-tools",
+      "file",
+      "tools",
+      "files",
+      "file"
+   ],
+   "author": "acegoal07",
+   "license": "MIT",
+   "dependencies": {
+      "r-json": "^1.2.10"
+   }
+}
