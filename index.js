@@ -9,7 +9,7 @@ const { UniversalFileTools } = require("./lib/UniversalFileTools"),
  *
  * @returns {UniversalFileTools} An instance of the class
  */
-exports.universalFileTools = function() {
+exports.UniversalFileTools = function() {
    return new UniversalFileTools();
 }
 ///////////////////////////////////////////////////////////////////////////
