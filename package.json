@@ -3,6 +3,10 @@
    "version": "1.0.0",
    "description": "A package of easy to use tools for interacting with files using javascript",
    "main": "index.js",
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/acegoal07/file-tools.git"
+   },
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
    },
@@ -16,7 +20,14 @@
    ],
    "author": "acegoal07",
    "license": "MIT",
+   "bugs": {
+      "url": "https://github.com/acegoal07/file-tools/issues"
+   },
+   "homepage": "https://github.com/acegoal07/file-tools#readme",
    "dependencies": {
       "r-json": "^1.2.10"
+   },
+   "publishConfig": {
+      "access": "public"
    }
 }
