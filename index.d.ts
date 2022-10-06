@@ -58,13 +58,19 @@ declare class UniversalFileTools {
      * @param {String} dir The path to where you want the folder created
      */
     createDir(dir: string): any;
+    /**
+     * Returns the data from the file you specify
+     *
+     * @param {String} path The path to the txt file you want to read
+     */
+    readFile(path: string): any;
 }
 /**
  * The json tools class
  */
 declare class JsonFileTools {
     /**
-     * Returns the data from the specified file
+     * Returns the data from the specified file in json format allowing it to be referenced
      *
      * @param {String} path The path to the file you want to read
      * @returns {Object} The data from the file

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Dependencies  /////////////////////////////////////////////////////////
+// Dependencies  //////////////////////////////////////////////////////////
 const rJson = require("r-json"),
    fs = require("fs");
 ///////////////////////////////////////////////////////////////////////////
@@ -9,7 +9,7 @@ const rJson = require("r-json"),
  *
  * @returns {UniversalFileTools} An instance of the class
  */
- exports.universalFileTools = function() {
+exports.universalFileTools = function() {
    return new UniversalFileTools();
 }
 
@@ -163,9 +163,21 @@ class UniversalFileTools {
       }
       return fs.mkdir(dir, { recursive: true });
    }
+
+   /**
+    * Returns the data from the file you specify
+    * 
+    * @param {String} path The path to the txt file you want to read
+    */
+   readFile(path) {
+      if (!path) {
+         throw new Error("ERROR with readFile: path is null");
+      }
+      return fs.readFileSync(path, 'utf8');
+   }
 }
 ///////////////////////////////////////////////////////////////////////////
-// Json Tools /////////////////////////////////////////////////////////////
+// json Tools /////////////////////////////////////////////////////////////
 /**
  * Returns a class filling with tools specific for json files
  *
@@ -181,7 +193,7 @@ exports.JsonFileTools = function() {
 class JsonFileTools {
 
    /**
-    * Returns the data from the specified file
+    * Returns the data from the specified file in json format allowing it to be referenced
     *
     * @param {String} path The path to the file you want to read
     * @returns {Object} The data from the file
@@ -245,13 +257,13 @@ class JsonFileTools {
     */
    getFiles(dir) {
       if (!dir) {
-         throw new Error("ERROR with getJsonFiles: dir is null");
+         throw new Error("ERROR with getFiles: dir is null");
       }
       if (!fs.statSync(dir).isDirectory()) {
-         throw new Error("ERROR with getJsonFile: The path you have provided is not to a file");
+         throw new Error("ERROR with getFile: The path you have provided is not to a file");
       }
       if (!exports.universalFileTools().dirExists(dir)) {
-         throw new Error("ERROR with getJsonFile: There is no dir at the path you have provided");
+         throw new Error("ERROR with getFile: There is no dir at the path you have provided");
       }
       let array = [];
       for (const file of fs.readdirSync(dir)) {
