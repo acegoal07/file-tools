@@ -28,9 +28,7 @@ class UniversalFileTools {
       if (!path) {
          throw new Error("ERROR with createFile: Path is null");
       }
-      fs.writeFile(path, content, function (error) {
-         if (error) throw error;
-      });
+      return fs.writeFileSync(path, content);
    }
 
    /**
@@ -45,9 +43,7 @@ class UniversalFileTools {
       if (!this.fileExists(path)) {
          throw new Error(`ERROR with deleteFile: File ${path} does not exists`);
       }
-      fs.unlink(path, function (error) {
-         if (error) throw error;
-      });
+      return fs.unlinkSync(path);
    }
 
    /**
@@ -66,10 +62,8 @@ class UniversalFileTools {
       if (!newDir) {
          throw new Error("ERROR with moveFile: newPath is null");
       }
-      fs.copyFile(path, newDir, function (error) {
-         if (error) throw error;
-      });
-      this.deleteFile(path);
+      fs.copyFileSync(path, newDir);
+      return this.deleteFile(path);
    }
 
    /**
@@ -86,13 +80,9 @@ class UniversalFileTools {
          throw new Error(`ERROR with copyFile: File ${path} does not exists`);
       }
       if (!copyPath) {
-         fs.copyFile(path, path.replace(".json","-copy.json"), function (error) {
-            if (error) throw error;
-         });
+         return fs.copyFileSync(path, path.replace(".json","-copy.json"));
       } else {
-         fs.copyFile(path, copyPath, function (error) {
-            if (error) throw error;
-         });
+         return fs.copyFileSync(path, copyPath);
       }
    }
 
@@ -112,9 +102,7 @@ class UniversalFileTools {
       if (!newName) {
          throw new Error("ERROR with renameFile: newName is null")
       }
-      fs.rename(path, path.replace(path.split(/[\\/]/).pop(), newName), function (error) {
-         if (error) throw error;
-      });
+      return fs.renameSync(path, path.replace(path.split(/[\\/]/).pop(), newName));
    }
 
    /**
@@ -161,7 +149,7 @@ class UniversalFileTools {
       if (this.dirExists(dir)) {
          return;
       }
-      return fs.mkdir(dir, { recursive: true });
+      return fs.mkdirSync(dir, { recursive: true });
    }
 
    /**
@@ -191,6 +179,35 @@ exports.JsonFileTools = function() {
  * The json tools class
  */
 class JsonFileTools {
+   
+   /**
+    * Returns an instance of a json file editor
+    * To use this tool you must have @acegoal07/json-editor package installed 
+    * 
+    * @param {String} path The path to the file you want to edit
+    * @param {{
+    *    stringify_width?: Number,
+    *    stringify_fn?: Function,
+    *    stringify_eol?: Boolean,
+    *    ignore_dots?: Boolean,
+    *    autosave?: Boolean
+    * }} options An object containing the following fields:
+    *  - `stringify_width` (Number): The JSON stringify indent width (default: `2`)
+    *  - `stringify_fn` (Function): A function used by `JSON.stringify`
+    *  - `stringify_eol` (Boolean): Whether to add the new line at the end of the file or not (default: `false`)
+    *  - `ignore_dots` (Boolean): Whether to use the path including dots or have an object structure (default: `false`)
+    *  - `autosave` (Boolean): Save the file when setting some data in it
+    * @returns {JsonEditor} The editor instance
+    */
+   Editor(path, options) {
+      try {
+         require("@acegoal07/json-editor")
+      } catch {
+         return console.log("To use the editor you need to have a '@acegoal07/json-editor' installed");
+      }
+      const JsonEditor = require("@acegoal07/json-editor");
+      return JsonEditor.editFile(path, options);
+   }
 
    /**
     * Returns the data from the specified file in json format allowing it to be referenced
