@@ -52,6 +52,12 @@ declare class UniversalFileTools {
      * @returns {Boolean} A boolean
      */
     dirExists(dir: string): boolean;
+    /**
+     * Creates a folder where you specify
+     *
+     * @param {String} dir The path to where you want the folder created
+     */
+    createDir(dir: string): any;
 }
 /**
  * The json tools class

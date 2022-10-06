@@ -6,7 +6,7 @@ const rJson = require("r-json"),
 // General Tools //////////////////////////////////////////////////////////
 /**
  * Returns a class filled with tools that can be used on any file type
- * 
+ *
  * @returns {UniversalFileTools} An instance of the class
  */
  exports.universalFileTools = function() {
@@ -19,8 +19,8 @@ const rJson = require("r-json"),
 class UniversalFileTools {
 
    /**
-    * Creates a file at the location you provided 
-    * 
+    * Creates a file at the location you provided
+    *
     * @param {String} path The path to the file you want to create
     * @param {Anything} data The data you want to put in the file
     */
@@ -30,12 +30,12 @@ class UniversalFileTools {
       }
       fs.writeFile(path, content, function (error) {
          if (error) throw error;
-      });      
+      });
    }
 
    /**
     * Deletes the file you specify
-    * 
+    *
     * @param {String} path The path to the file you want to delete
     */
    deleteFile(path) {
@@ -48,11 +48,11 @@ class UniversalFileTools {
       fs.unlink(path, function (error) {
          if (error) throw error;
       });
-   }  
+   }
 
    /**
     * Moves the file from the old location to the new location
-    * 
+    *
     * @param {String} path The path to the file you want to move
     * @param {String} newDir The path to the folder you want to move the file to
     */
@@ -74,7 +74,7 @@ class UniversalFileTools {
 
    /**
     * Duplicates the file you specify
-    * 
+    *
     * @param {String} path The path to the file you want to copy
     * @param {String} copyPath The path to the location you want the new file saved
     */
@@ -98,7 +98,7 @@ class UniversalFileTools {
 
    /**
     * Renames the specified file to the new provided name
-    * 
+    *
     * @param {String} path The path to the file you want to rename
     * @param {String} newName The name you want to change the file to
     */
@@ -119,7 +119,7 @@ class UniversalFileTools {
 
    /**
     * Returns a boolean whether or not the file exists
-    * 
+    *
     * @param {String} path The path to the file you want to check
     * @returns {Boolean} A boolean
     */
@@ -135,25 +135,40 @@ class UniversalFileTools {
 
    /**
     * Returns a boolean whether or not the directory exists
-    * 
+    *
     * @param {String} dir The path to the directory you want to check
     * @returns {Boolean} A boolean
     */
    dirExists(dir) {
       if (!dir) {
-         throw new Error("ERROR with dirExist: path is null");
+         throw new Error("ERROR with dirExist: dir is null");
       }
       if (!fs.statSync(dir).isDirectory()) {
          throw new Error("ERROR with dirExist: The path you have provided is not to a directory");
       }
       return fs.existsSync(dir);
    }
+
+   /**
+    * Creates a folder where you specify
+    *
+    * @param {String} dir The path to where you want the folder created
+    */
+   createDir(dir) {
+      if (!dir) {
+         throw new Error("ERROR with createDir: dir is null");
+      }
+      if (this.dirExists(dir)) {
+         return;
+      }
+      return fs.mkdir(dir, { recursive: true });
+   }
 }
 ///////////////////////////////////////////////////////////////////////////
 // Json Tools /////////////////////////////////////////////////////////////
 /**
  * Returns a class filling with tools specific for json files
- * 
+ *
  * @returns {JsonFileTools} An instance of the class
  */
 exports.JsonFileTools = function() {
@@ -167,7 +182,7 @@ class JsonFileTools {
 
    /**
     * Returns the data from the specified file
-    * 
+    *
     * @param {String} path The path to the file you want to read
     * @returns {Object} The data from the file
     */
@@ -183,9 +198,9 @@ class JsonFileTools {
 
    /**
     * Returns the data from all the json files in a folder either as a map or array
-    * 
+    *
     * @param {String} dir The path to the directory you want to read data from
-    * @param {"Map" | "Array"} format The format you want to the returned 
+    * @param {"Map" | "Array"} format The format you want to the returned
     * @returns {Map | Array} The data returned
     */
    readAllFiles(dir, format = "Map") {
@@ -214,7 +229,7 @@ class JsonFileTools {
          for (const file of fs.readdirSync(dir)) {
             if (file.toLowerCase().endsWith(".json")) {
                map.set(file.toLowerCase().replace(".json", ""), rJson(`${dir}/${file}`));
-               
+
             }
             void(0);
          }
@@ -224,7 +239,7 @@ class JsonFileTools {
 
    /**
     * Returns an array of the files in the directory that are json files
-    * 
+    *
     * @param {String} dir The path to the directory
     * @returns {Array} An array of names
     */
