@@ -62,4 +62,18 @@ export class UniversalFileTools {
      * @param {String} path The path to the txt file you want to read
      */
     readFile(path: string): any;
+    /**
+     * Writes data to the file you specify
+     *
+     * @param {String} path The path to the file you want to write the data to
+     * @param {Anything} data The data you want to write to the file
+     */
+    writeFile(path: string, data: Anything): any;
+    /**
+     * Writes the data from one file to another
+     *
+     * @param {String} path The path to the file you want to get the data from
+     * @param {String} copyPath The path to the file you want to write the data to
+     */
+    writeCopy(path: string, copyPath: string): any;
 }
