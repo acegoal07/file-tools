@@ -18,6 +18,6 @@ npm i @acegoal07/file-tools
 ## About
 This package is still a working progress and support for specific tools for more file types will be added, if you are wanting support for specific tools or support for a specific file type request the feature with an issue report and it will be added
 
-Feedback on this package will be never useful to the development of the package as i am unable to test all the features
+Feedback on this package will be very useful to the development of the package as i am unable to test all the features to the extent they are going to be used
 
 If you experience any issues or would like to recommend a feature open an issue and i'll look into it

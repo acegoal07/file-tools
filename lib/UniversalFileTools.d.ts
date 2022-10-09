@@ -76,4 +76,12 @@ export class UniversalFileTools {
      * @param {String} copyPath The path to the file you want to write the data to
      */
     writeCopy(path: string, copyPath: string): any;
+    /**
+     * Returns an array of file names with the specified file type
+     *
+     * @param {String} dir The path to the directory you want to search
+     * @param {String} fileType The file type you want to get the names of
+     * @returns {Array} An array filled with all the names of the files
+     */
+    getFileType(dir: string, fileType: string): any[];
 }
