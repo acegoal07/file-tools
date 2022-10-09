@@ -1,5 +1,5 @@
 {
-   "name": "file-tools",
+   "name": "@acegoal07/file-tools",
    "version": "1.0.0",
    "description": "A package of easy to use tools for interacting with files using javascript",
    "main": "index.js",
