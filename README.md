@@ -21,3 +21,5 @@ This package is still a working progress and support for specific tools for more
 Feedback on this package will be very useful to the development of the package as i am unable to test all the features to the extent they are going to be used
 
 If you experience any issues or would like to recommend a feature open an issue and i'll look into it
+
+There will be a wiki for the package which you will be able find <a href="https://github.com/acegoal07/file-tools/wiki">here</a> this is still a working progress
