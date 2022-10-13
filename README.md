@@ -22,4 +22,6 @@ Feedback on this package will be very useful to the development of the package a
 
 If you experience any issues or would like to recommend a feature open an issue and i'll look into it
 
-There will be a wiki for the package which you will be able find <a href="https://github.com/acegoal07/file-tools/wiki">here</a> this is still a working progress
+If your interested in supporting my projects you can find donation options <a href="https://acegoal07.dev/donate">here</a>
+
+You can find all the information on how to use the package <a href="https://github.com/acegoal07/file-tools/wiki">here</a> on the github wiki
