@@ -21,7 +21,7 @@ export class JsonFileTools {
      *  - `autosave` (Boolean): Save the file when setting some data in it
      * @returns {JsonEditor} The editor instance
      */
-    Editor(path: string, options: {
+    editor(path: string, options: {
         stringify_width?: number;
         stringify_fn?: Function;
         stringify_eol?: boolean;

@@ -1,6 +1,6 @@
 {
    "name": "@acegoal07/file-tools",
-   "version": "1.0.0",
+   "version": "1.0.2",
    "description": "A package of easy to use tools for interacting with files using javascript",
    "main": "index.js",
    "repository": {
