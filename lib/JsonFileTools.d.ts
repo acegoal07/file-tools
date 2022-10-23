@@ -32,9 +32,10 @@ export class JsonFileTools {
      * Returns the data from the specified file in json format allowing it to be referenced
      *
      * @param {String} path The path to the file you want to read
+     * @param {Function} callback An optional callback function which will turn the function into an asynchronous one
      * @returns {Object} The data from the file
      */
-    readFile(path: string): any;
+    readFile(path: string, callback: Function): any;
     /**
      * Returns the data from all the json files in a folder either as a map or array
      *

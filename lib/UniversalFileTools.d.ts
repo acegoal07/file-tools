@@ -60,16 +60,16 @@ export class UniversalFileTools {
      * Returns the data from the file you specify
      *
      * @param {String} path The path to the txt file you want to read
-     * @returns {Anything} The data from the file
+     * @returns The data from the file
      */
-    readFile(path: string): Anything;
+    readFile(path: string): any;
     /**
      * Writes data to the file you specify
      *
      * @param {String} path The path to the file you want to write the data to
-     * @param {Anything} data The data you want to write to the file
+     * @param data The data you want to write to the file
      */
-    writeFile(path: string, data: Anything): any;
+    writeFile(path: string, data: any): any;
     /**
      * Writes the data from one file to another
      *
