@@ -1,6 +1,3 @@
-/**
- * The universal tools class
- */
 export class UniversalFileTools {
     /**
      * Creates a file at the location you provided

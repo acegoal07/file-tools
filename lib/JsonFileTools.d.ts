@@ -1,6 +1,3 @@
-/**
- * The json tools class
- */
 export class JsonFileTools {
     /**
      * Returns an instance of a json file editor
