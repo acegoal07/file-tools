@@ -1,7 +1,8 @@
 {
   "include": ["index.js", "./lib/"],
   "compilerOptions": {
-   "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": true,
