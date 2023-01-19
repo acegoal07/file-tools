@@ -64,6 +64,21 @@ try {
     throw new Error(error);
 }
 
+// Rename file
+try {
+    fileTools.UniversalFileTools().renameFile("testFiles/test.txt", "test2.txt");
+    if (fileTools.UniversalFileTools().fileExists("testFiles/test2")) {
+        console.log("\x1b[92mRename file test test passed\x1b[0m");
+    } else {
+        console.log("\x1b[91mRename file test test Failed\x1b[0m");
+    }
+} catch (error) {
+    console.log("\x1b[91mRename file test Failed\x1b[0m");
+    throw new Error(error);
+}
+
+return;
+
 // Delete directory
 try {
     fileTools.UniversalFileTools().deleteDir("testFiles", true);
