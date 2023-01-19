@@ -13,7 +13,7 @@
       "buildTypes": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types",
       "tscBuild": "npx tsc",
       "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist",
-      "test": "npm run build && cls && npm i && cls && node test.js && del package-lock.json && rmdir /s /q jsonFiles && rmdir /s /q node_modules"
+      "test": "npm run build && cls && npm i && cls && node test.js && del package-lock.json && rmdir /s /q node_modules"
    },
    "keywords": [
       "acegoal07",
