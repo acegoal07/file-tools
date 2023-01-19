@@ -6,7 +6,7 @@
    <img alt="Libraries.io dependency status for latest release" src="https://img.shields.io/github/issues-raw/acegoal07/file-tools">
    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/acegoal07/file-tools">
    <img alt="Monthly Downloads" src="https://img.shields.io/npm/dm/@acegoal07/file-tools">
-   <img "code scan" src="https://github.com/acegoal07/file-tools/actions/workflows/codeql.yml/badge.svg">
+   <img alt="code scan" src="https://github.com/acegoal07/file-tools/actions/workflows/codeql.yml/badge.svg">
 </div>
 
 ---

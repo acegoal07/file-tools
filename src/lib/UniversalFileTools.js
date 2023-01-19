@@ -140,6 +140,34 @@ exports.UniversalFileTools = class {
       }
    }
    /**
+    * Deletes specified directory
+    * 
+    * @param {String} dir The path to the folder you want deleted
+    * @param {Boolean} force Whether or not it should force delete the folder
+    * @returns 
+    */
+   deleteDir(dir, force) {
+      if (!dir) {
+         throw new Error("ERROR with deleteDir: dir is null");
+      }
+      if (!this.dirExists(dir)) {
+         throw new Error("ERROR with deleteDir: The directory your trying to delete does not exits"); 
+      }
+      if (!this.isDirEmpty(dir) && !force) {
+         throw new Error("ERROR with deleteDir: The directory your trying to delete is not empty to delete this folder you need force enabled"); 
+      }
+      return fs.rmSync(dir, { recursive: true, force: force });
+   }
+   /**
+    * Checks whether or not the folder specified contains any files
+    * 
+    * @param {String} dir The path to the folder you want to check
+    * @returns {Boolean}
+    */
+   isDirEmpty(dir) {
+      return fs.readdirSync(dir).length === 0;
+   }
+   /**
     * Returns the data from the file you specify
     *
     * @param {String} path The path to the txt file you want to read
