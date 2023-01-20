@@ -1,19 +1,9 @@
 const fileTools = require("./dist");
-const top_bottom = "|------------------------------|--------|"
+const top_bottom_size = 28;
+const top_bottom = `|${"-".repeat(top_bottom_size + 2)}|--------|`;
 
-/**
- *
- * @param {String} testName
- * @param {Boolean} value
- */
 function logFormatter (testName, value = false) {
-    try {
-        const size = 28;
-        const output = `| ${testName}${" ".repeat((size - testName.length))} | ${value? "\x1b[92mPASSED\x1b[0m" : "\x1b[91mFAILED\x1b[0m"} |`
-        console.log(output);
-    } catch (error) {
-        throw new Error(error);
-    }
+    console.log(`| ${testName}${" ".repeat((top_bottom_size - testName.length))} | ${value? "\x1b[92mPASSED\x1b[0m" : "\x1b[91mFAILED\x1b[0m"} |`);
 }
 console.log(top_bottom);
 console.log("|             TEST             | STATUS |")
