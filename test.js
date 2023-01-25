@@ -1,14 +1,20 @@
-const fileTools = require("./dist");
+///////////////////////////////////////////////////////////////////////////
+// References ////////////////////////////////////////////////////////////
+const fileTools = require("./src");
 const top_bottom_size = 28;
 const top_bottom = `|${"-".repeat(top_bottom_size + 2)}|--------|`;
-
+///////////////////////////////////////////////////////////////////////////
+// Log output ////////////////////////////////////////////////////////////
 function logFormatter (testName, value = false) {
     console.log(`| ${testName}${" ".repeat((top_bottom_size - testName.length))} | ${value? "\x1b[92mPASSED\x1b[0m" : "\x1b[91mFAILED\x1b[0m"} |`);
 }
+///////////////////////////////////////////////////////////////////////////
+// Universal File Tools tests ////////////////////////////////////////////
 console.log(top_bottom);
-console.log("|             TEST             | STATUS |")
+console.log("| UniversalFileTools                    |");
 console.log(top_bottom);
-
+console.log("|             TEST             | STATUS |");
+console.log(top_bottom);
 // Create directory
 try {
     fileTools.UniversalFileTools().createDir("testFiles");
@@ -21,7 +27,6 @@ try {
     logFormatter('Directory creation');
     throw new Error(error);
 }
-
 // Create file
 try {
     fileTools.UniversalFileTools().createFile("testFiles/test.txt");
@@ -40,7 +45,6 @@ try {
     logFormatter('File creation');
     throw new Error(error);
 }
-
 // Copy file
 try {
     fileTools.UniversalFileTools().copyFile("testFiles/test.txt");
@@ -53,7 +57,6 @@ try {
     logFormatter('File copy');
     throw new Error(error);
 }
-
 // Delete file
 try {
     fileTools.UniversalFileTools().deleteFile("testFiles/test-copy.txt");
@@ -66,7 +69,6 @@ try {
     logFormatter('File deletion');
     throw new Error(error);
 }
-
 // Is directory empty
 try {
     if (!fileTools.UniversalFileTools().isDirEmpty("testFiles")) {
@@ -78,7 +80,6 @@ try {
     logFormatter('Is directory empty');
     throw new Error(error);
 }
-
 // Rename file
 try {
     fileTools.UniversalFileTools().renameFile("testFiles/test.txt", "test2.txt");
@@ -91,7 +92,6 @@ try {
     logFormatter('Rename file');
     throw new Error(error);
 }
-
 // Move file
 try {
     fileTools.UniversalFileTools().moveFile("testFiles/test2.txt", "test2.txt");
@@ -105,7 +105,6 @@ try {
     logFormatter('Move file');
     throw new Error(error);
 }
-
 // Write file
 try {
     fileTools.UniversalFileTools().writeFile("testFiles/testTxt.txt", "passed");
@@ -118,7 +117,6 @@ try {
     logFormatter('Write file');
     throw new Error(error);
 }
-
 // Write copy file
 try {
     fileTools.UniversalFileTools().writeCopy("testFiles/testTxt.txt", "testFiles/test.txt");
@@ -131,7 +129,6 @@ try {
     logFormatter('Write copy');
     throw new Error(error);
 }
-
 // Get file type
 try {
     if (fileTools.UniversalFileTools().getFileType("testFiles", "txt").length == 2) {
@@ -144,7 +141,6 @@ try {
     logFormatter('Get file type');
     throw new Error(error);
 }
-
 // Delete directory
 try {
     fileTools.UniversalFileTools().deleteDir("testFiles", true);
@@ -157,5 +153,30 @@ try {
     logFormatter('Directory deletion');
     throw new Error(error);
 }
-
+console.log(top_bottom);
+///////////////////////////////////////////////////////////////////////////
+// Json File Tools tests /////////////////////////////////////////////////
+console.log();
+console.log(top_bottom);
+console.log("| JsonFileTools                         |");
+console.log(top_bottom);
+console.log("|             TEST             | STATUS |");
+console.log(top_bottom);
+// Read file
+try {
+    fileTools.UniversalFileTools().createDir("testFiles");
+    fileTools.UniversalFileTools().createFile("testFiles/test.json", 
+        {
+            "Hello": "World!"
+        }
+    )
+    if (fileTools.JsonFileTools().readFile("testFiles/test.json").Hello == "World!") {
+        logFormatter('Read file', true);
+    } else {
+        logFormatter('Read file');
+    }
+} catch (error) {
+    logFormatter('Read file');
+    throw new Error(error);
+}
 console.log(top_bottom);

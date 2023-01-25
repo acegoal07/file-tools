@@ -11,13 +11,16 @@ exports.UniversalFileTools = class {
     * Creates a file at the location you provided
     *
     * @param {String} path The path to the file you want to create
-    * @param {Anything} data The data you want to put in the file
+    * @param {String} data The data you want to put in the file
     */
-   createFile(path, content = "") {
+   createFile(path, data = null) {
       if (!path) {
          throw new Error("ERROR with createFile: Path is null");
       }
-      return fs.writeFileSync(path, content);
+      fs.writeFileSync(path, "")
+      if (data) {
+         this.writeFile(path, data);
+      }
    }
    /**
     * Deletes the file you specify
@@ -141,26 +144,26 @@ exports.UniversalFileTools = class {
    }
    /**
     * Deletes specified directory
-    * 
+    *
     * @param {String} dir The path to the folder you want deleted
     * @param {Boolean} force Whether or not it should force delete the folder
-    * @returns 
+    * @returns
     */
    deleteDir(dir, force) {
       if (!dir) {
          throw new Error("ERROR with deleteDir: dir is null");
       }
       if (!this.dirExists(dir)) {
-         throw new Error("ERROR with deleteDir: The directory your trying to delete does not exits"); 
+         throw new Error("ERROR with deleteDir: The directory your trying to delete does not exits");
       }
       if (!this.isDirEmpty(dir) && !force) {
-         throw new Error("ERROR with deleteDir: The directory your trying to delete is not empty to delete this folder you need force enabled"); 
+         throw new Error("ERROR with deleteDir: The directory your trying to delete is not empty to delete this folder you need force enabled");
       }
       return fs.rmSync(dir, { recursive: true, force: force });
    }
    /**
     * Checks whether or not the folder specified contains any files
-    * 
+    *
     * @param {String} dir The path to the folder you want to check
     * @returns {Boolean}
     */
@@ -192,7 +195,12 @@ exports.UniversalFileTools = class {
       if (!data) {
          throw new Error("ERROR with writeFile: data is null");
       }
-      return fs.writeFileSync(path, data);
+      if (typeof data == "object") {
+         return fs.writeFileSync(path, JSON.stringify(data, null, 2));
+      } 
+      else {
+         return fs.writeFileSync(path, data);
+      }
    }
    /**
     * Writes the data from one file to another
