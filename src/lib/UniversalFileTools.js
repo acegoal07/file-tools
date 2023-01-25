@@ -70,7 +70,19 @@ exports.UniversalFileTools = class {
       }
       if (!copyPath) {
          const fileType = path.split(".").pop();
-         return fs.copyFileSync(path, path.replace(`.${fileType}`, `-copy.${fileType}`));
+         if (this.fileExists(path.replace(`.${fileType}`, `-copy.${fileType}`))) {
+            let count = 1;
+            while (true) {
+               if (!this.fileExists(path.replace(`.${fileType}`, `-copy${count}.${fileType}`))) {
+                  fs.copyFileSync(path, path.replace(`.${fileType}`, `-copy${count}.${fileType}`));
+                  break;
+               } else {
+                  count += 1;
+               }
+            }
+         } else {
+            return fs.copyFileSync(path, path.replace(`.${fileType}`, `-copy.${fileType}`));
+         }
       } else {
          return fs.copyFileSync(path, copyPath);
       }
@@ -215,7 +227,7 @@ exports.UniversalFileTools = class {
       if (!copyPath) {
          throw new Error("ERROR with writeFile: copyPath is null");
       }
-      return fs.writeFileSync(copyPath, fs.readFileSync(path, 'utf8'));
+      return this.writeFile(copyPath, fs.readFileSync(path, 'utf8'))
    }
    /**
     * Returns an array of file names with the specified file type

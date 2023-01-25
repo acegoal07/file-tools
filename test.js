@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 // References ////////////////////////////////////////////////////////////
-const fileTools = require("./src");
+const fileTools = require("./dist");
 const top_bottom_size = 28;
 const top_bottom = `|${"-".repeat(top_bottom_size + 2)}|--------|`;
 ///////////////////////////////////////////////////////////////////////////
@@ -179,4 +179,35 @@ try {
     logFormatter('Read file');
     throw new Error(error);
 }
+// Read all files
+try {
+    fileTools.UniversalFileTools().copyFile("testFiles/test.json");
+    fileTools.UniversalFileTools().copyFile("testFiles/test.json");
+    let count = 0;
+    for (const data of fileTools.JsonFileTools().readAllFiles("testFiles", "Array")) {
+        if (!data.Hello == "World!") {
+            logFormatter('Read all files');
+        } else {
+            count += 1;
+        }
+        if (count == fileTools.JsonFileTools().readAllFiles("testFiles", "Array").length) {
+        logFormatter('Read all files', true);
+        }
+    }
+} catch (error) {
+    logFormatter('Read all files');
+    throw new Error(error);
+}
+// Get files
+try {
+    if (fileTools.JsonFileTools().getFiles("testFiles").length == 3) {
+        logFormatter('Get files', true);
+    } else {
+        logFormatter('Get files');
+    }
+} catch (error) {
+    logFormatter('Get files');
+    throw new Error(error);
+}
+fileTools.UniversalFileTools().deleteDir("testFiles", true);
 console.log(top_bottom);
