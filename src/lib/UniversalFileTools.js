@@ -12,20 +12,23 @@ exports.UniversalFileTools = class {
     *
     * @param {String} path The path to the file you want to create
     * @param {String} data The data you want to put in the file
+    * @returns {this}
     */
    createFile(path, data = null) {
       if (!path) {
          throw new Error("ERROR with createFile: Path is null");
       }
-      fs.writeFileSync(path, "")
+      fs.writeFileSync(path, "");
       if (data) {
          this.writeFile(path, data);
       }
+      return this;
    }
    /**
     * Deletes the file you specify
     *
     * @param {String} path The path to the file you want to delete
+    * @returns {this}
     */
    deleteFile(path) {
       if (!path) {
@@ -41,6 +44,7 @@ exports.UniversalFileTools = class {
     *
     * @param {String} path The path to the file you want to move
     * @param {String} newDir The path to the folder you want to move the file to
+    * @returns {this}
     */
    moveFile(path, newDir) {
       if (!path) {
@@ -53,13 +57,15 @@ exports.UniversalFileTools = class {
          throw new Error("ERROR with moveFile: newPath is null");
       }
       fs.copyFileSync(path, newDir);
-      return this.deleteFile(path);
+      this.deleteFile(path);
+      return this;
    }
    /**
     * Duplicates the file you specify
     *
     * @param {String} path The path to the file you want to copy
     * @param {String} copyPath The path to the location you want the new file saved
+    * @returns {UniversalFileTools}
     */
    copyFile(path, copyPath) {
       if (!path) {
@@ -81,17 +87,19 @@ exports.UniversalFileTools = class {
                }
             }
          } else {
-            return fs.copyFileSync(path, path.replace(`.${fileType}`, `-copy.${fileType}`));
+            fs.copyFileSync(path, path.replace(`.${fileType}`, `-copy.${fileType}`));
          }
       } else {
-         return fs.copyFileSync(path, copyPath);
+         fs.copyFileSync(path, copyPath);
       }
+      return this;
    }
    /**
     * Renames the specified file to the new provided name
     *
     * @param {String} path The path to the file you want to rename
     * @param {String} newName The name you want to change the file to
+    * @returns {this}
     */
    renameFile(path, newName) {
       if (!path) {
@@ -103,7 +111,8 @@ exports.UniversalFileTools = class {
       if (!newName) {
          throw new Error("ERROR with renameFile: newName is null")
       }
-      return fs.renameSync(path, path.replace(path.split(/[\\/]/).pop(), newName));
+      fs.renameSync(path, path.replace(path.split(/[\\/]/).pop(), newName));
+      return this;
    }
    /**
     * Returns a boolean whether or not the file exists
@@ -145,23 +154,25 @@ exports.UniversalFileTools = class {
     * Creates a folder where you specify
     *
     * @param {String} dir The path to where you want the folder created
+    * @returns {this}
     */
    createDir(dir) {
       if (!dir) {
          throw new Error("ERROR with createDir: dir is null");
       }
       if (!this.dirExists(dir)) {
-         return fs.mkdirSync(dir, { recursive: true });
+         fs.mkdirSync(dir, { recursive: true });
       }
+      return this;
    }
    /**
     * Deletes specified directory
     *
     * @param {String} dir The path to the folder you want deleted
     * @param {Boolean} force Whether or not it should force delete the folder
-    * @returns
+    * @returns {this}
     */
-   deleteDir(dir, force) {
+   deleteDir(dir, force = false) {
       if (!dir) {
          throw new Error("ERROR with deleteDir: dir is null");
       }
@@ -171,7 +182,8 @@ exports.UniversalFileTools = class {
       if (!this.isDirEmpty(dir) && !force) {
          throw new Error("ERROR with deleteDir: The directory your trying to delete is not empty to delete this folder you need force enabled");
       }
-      return fs.rmSync(dir, { recursive: true, force: force });
+      fs.rmSync(dir, { recursive: true, force: force });
+      return this;
    }
    /**
     * Checks whether or not the folder specified contains any files
@@ -199,6 +211,7 @@ exports.UniversalFileTools = class {
     *
     * @param {String} path The path to the file you want to write the data to
     * @param data The data you want to write to the file
+    * @returns {this}
     */
    writeFile(path, data) {
       if (!path) {
@@ -208,17 +221,19 @@ exports.UniversalFileTools = class {
          throw new Error("ERROR with writeFile: data is null");
       }
       if (typeof data == "object") {
-         return fs.writeFileSync(path, JSON.stringify(data, null, 2));
+         fs.writeFileSync(path, JSON.stringify(data, null, 2));
       } 
       else {
-         return fs.writeFileSync(path, data);
+         fs.writeFileSync(path, data);
       }
+      return this;
    }
    /**
     * Writes the data from one file to another
     *
     * @param {String} path The path to the file you want to get the data from
     * @param {String} copyPath The path to the file you want to write the data to
+    * @returns {this}
     */
    writeCopy(path, copyPath) {
       if (!path) {
@@ -227,7 +242,8 @@ exports.UniversalFileTools = class {
       if (!copyPath) {
          throw new Error("ERROR with writeFile: copyPath is null");
       }
-      return this.writeFile(copyPath, fs.readFileSync(path, 'utf8'))
+      this.writeFile(copyPath, fs.readFileSync(path, 'utf8'))
+      return this;
    }
    /**
     * Returns an array of file names with the specified file type
