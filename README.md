@@ -7,7 +7,12 @@
    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/acegoal07/file-tools">
    <img alt="Monthly Downloads" src="https://img.shields.io/npm/dm/@acegoal07/file-tools">
    <img alt="code scan" src="https://github.com/acegoal07/file-tools/actions/workflows/codeql.yml/badge.svg">
-</div>
+</div><br>
+<p align="center">
+   <a href="https://github.com/acegoal07/file-tools/wiki">Wiki</a> &#xa0; | &#xa0;
+   <a href="https://www.npmjs.com/package/@acegoal07/file-tools">NPM</a> &#xa0; | &#xa0;
+   <a href="https://github.com/acegoal07" target="_blank">Author</a>
+</p>
 
 ---
 
