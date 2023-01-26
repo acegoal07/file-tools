@@ -65,7 +65,7 @@ exports.UniversalFileTools = class {
     *
     * @param {String} path The path to the file you want to copy
     * @param {String} copyPath The path to the location you want the new file saved
-    * @returns {UniversalFileTools}
+    * @returns {this}
     */
    copyFile(path, copyPath) {
       if (!path) {
