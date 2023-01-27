@@ -4,15 +4,15 @@ const fs = require("fs");
 ///////////////////////////////////////////////////////////////////////////
 // Class /////////////////////////////////////////////////////////////////
 /**
- * The universal tools class
+ * The class for all file tools
  */
-exports.UniversalFileTools = class {
+exports.FileTools = class {
    /**
     * Creates a file at the location you provided
     *
     * @param {String} path The path to the file you want to create
     * @param {String} data The data you want to put in the file
-    * @returns {this}
+    * @returns {this} An instance of UniversalFileTools
     */
    createFile(path, data = null) {
       if (!path) {
@@ -28,7 +28,7 @@ exports.UniversalFileTools = class {
     * Deletes the file you specify
     *
     * @param {String} path The path to the file you want to delete
-    * @returns {this}
+    * @returns {this} An instance of UniversalFileTools
     */
    deleteFile(path) {
       if (!path) {
@@ -44,7 +44,7 @@ exports.UniversalFileTools = class {
     *
     * @param {String} path The path to the file you want to move
     * @param {String} newDir The path to the folder you want to move the file to
-    * @returns {this}
+    * @returns {this} An instance of UniversalFileTools
     */
    moveFile(path, newDir) {
       if (!path) {
@@ -65,7 +65,7 @@ exports.UniversalFileTools = class {
     *
     * @param {String} path The path to the file you want to copy
     * @param {String} copyPath The path to the location you want the new file saved
-    * @returns {this}
+    * @returns {this} An instance of UniversalFileTools
     */
    copyFile(path, copyPath) {
       if (!path) {
@@ -99,7 +99,7 @@ exports.UniversalFileTools = class {
     *
     * @param {String} path The path to the file you want to rename
     * @param {String} newName The name you want to change the file to
-    * @returns {this}
+    * @returns {this} An instance of UniversalFileTools
     */
    renameFile(path, newName) {
       if (!path) {
@@ -136,9 +136,11 @@ exports.UniversalFileTools = class {
     * Returns a boolean whether or not the directory exists
     *
     * @param {String} dir The path to the directory you want to check
+    * @deprecated This function has been moved to DirectoryTools
     * @returns {Boolean} A boolean
     */
    dirExists(dir) {
+      process.emitWarning("This function has been moved to DirectoryTools");
       if (!dir) {
          throw new Error("ERROR with dirExist: dir is null");
       }
@@ -154,9 +156,11 @@ exports.UniversalFileTools = class {
     * Creates a folder where you specify
     *
     * @param {String} dir The path to where you want the folder created
-    * @returns {this}
+    * @deprecated This function has been moved to DirectoryTools
+    * @returns {this} An instance of UniversalFileTools
     */
    createDir(dir) {
+      process.emitWarning("This function has been moved to DirectoryTools");
       if (!dir) {
          throw new Error("ERROR with createDir: dir is null");
       }
@@ -170,9 +174,11 @@ exports.UniversalFileTools = class {
     *
     * @param {String} dir The path to the folder you want deleted
     * @param {Boolean} force Whether or not it should force delete the folder
-    * @returns {this}
+    * @deprecated This function has been moved to DirectoryTools
+    * @returns {this} An instance of UniversalFileTools
     */
    deleteDir(dir, force = false) {
+      process.emitWarning("This function has been moved to DirectoryTools");
       if (!dir) {
          throw new Error("ERROR with deleteDir: dir is null");
       }
@@ -189,9 +195,11 @@ exports.UniversalFileTools = class {
     * Checks whether or not the folder specified contains any files
     *
     * @param {String} dir The path to the folder you want to check
-    * @returns {Boolean}
+    * @deprecated This function has been moved to DirectoryTools
+    * @returns {Boolean} Whether or not the directory is empty
     */
    isDirEmpty(dir) {
+      process.emitWarning("This function has been moved to DirectoryTools");
       return fs.readdirSync(dir).length === 0;
    }
    /**
@@ -211,7 +219,7 @@ exports.UniversalFileTools = class {
     *
     * @param {String} path The path to the file you want to write the data to
     * @param data The data you want to write to the file
-    * @returns {this}
+    * @returns {this} An instance of UniversalFileTools
     */
    writeFile(path, data) {
       if (!path) {
@@ -233,7 +241,7 @@ exports.UniversalFileTools = class {
     *
     * @param {String} path The path to the file you want to get the data from
     * @param {String} copyPath The path to the file you want to write the data to
-    * @returns {this}
+    * @returns {this} An instance of UniversalFileTools
     */
    writeCopy(path, copyPath) {
       if (!path) {
@@ -242,7 +250,7 @@ exports.UniversalFileTools = class {
       if (!copyPath) {
          throw new Error("ERROR with writeFile: copyPath is null");
       }
-      this.writeFile(copyPath, fs.readFileSync(path, 'utf8'))
+      this.writeFile(copyPath, fs.readFileSync(path, 'utf8'));
       return this;
    }
    /**
@@ -250,9 +258,11 @@ exports.UniversalFileTools = class {
     *
     * @param {String} dir The path to the directory you want to search
     * @param {String} fileType The file type you want to get the names of
+    * @deprecated This function has been moved to DirectoryTools
     * @returns {Array} An array filled with all the names of the files
     */
    getFileType(dir, fileType) {
+      process.emitWarning("This function has been moved to DirectoryTools");
       if (!dir) {
          throw new Error("ERROR with getFileType: dir is null");
       }
@@ -266,5 +276,18 @@ exports.UniversalFileTools = class {
          }
       }
       return array;
+   }
+   /**
+    * Removes all the data from a file
+    * 
+    * @param {String} path 
+    * @returns {this} An instance of UniversalFileTools
+    */
+   blankFile(path) {
+      if (!path) {
+         throw new Error("ERROR with blankFile: path is null");
+      }
+      this.writeFile(path, "");
+      return this;
    }
 }

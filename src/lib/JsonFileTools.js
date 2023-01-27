@@ -1,8 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////
-const fs = require("fs");
-const rJson = require("r-json");
-const { UniversalFileTools } = require("./UniversalFileTools");
+const fs = require("fs"),
+   rJson = require("r-json"),
+   { FileTools } = require("./FileTools"),
+   { DirectoryTools } = require("./DirectoryTools");
 ///////////////////////////////////////////////////////////////////////////
 // Class /////////////////////////////////////////////////////////////////
 /**
@@ -48,7 +49,7 @@ exports.JsonFileTools = class {
       if (!path) {
          throw new Error("ERROR with readFile: path is null");
       }
-      if (!new UniversalFileTools().fileExists(path)) {
+      if (!new FileTools().fileExists(path)) {
          throw new Error(`ERROR with readFile: The provided file does not exists`);
       }
       if (!callback) {
@@ -74,7 +75,10 @@ exports.JsonFileTools = class {
       if (!dir) {
          throw new Error("ERROR with readAllFiles: dir is null");
       }
-      if (!new UniversalFileTools().dirExists(dir)) {
+      if (!fs.statSync(dir).isDirectory()) {
+         throw new Error("ERROR with readAllFiles: The path you have provided is not to a directory");
+      }
+      if (!new DirectoryTools().dirExists(dir)) {
          throw new Error(`ERROR with readAllFiles: The provided folder does not exists`);
       }
       if (format === "Array") {
@@ -114,9 +118,9 @@ exports.JsonFileTools = class {
          throw new Error("ERROR with getFiles: dir is null");
       }
       if (!fs.statSync(dir).isDirectory()) {
-         throw new Error("ERROR with getFile: The path you have provided is not to a file");
+         throw new Error("ERROR with getFile: The path you have provided is not to a directory");
       }
-      if (!new UniversalFileTools().dirExists(dir)) {
+      if (!new DirectoryTools().dirExists(dir)) {
          throw new Error("ERROR with getFile: There is no dir at the path you have provided");
       }
       let array = [];
