@@ -89,6 +89,15 @@ exports.DirectoryTools = class {
       if (!dir) {
          throw new Error("ERROR with getFileType: dir is null");
       }
+      if (!fs.statSync(dir).isDirectory()) {
+         throw new Error("ERROR with getFileType: The path you have provided is not to a directory");
+      }
+      if (!this.dirExists(dir)) {
+         throw new Error("ERROR with getFileType: The directory you are trying to reach does not exist");
+      }
+      if (this.isDirEmpty(dir)) {
+         throw new Error("ERROR with getFileType: The directory you are trying to retrieve files from is empty");
+      }
       if (!fileType) {
          throw new Error("ERROR with getFileTypes: fileType is not specified");
       }
