@@ -44,12 +44,9 @@ exports.FileTools = class {
     *
     * @param {String} path The path to the file you want to move
     * @param {String} newDir The path to the folder you want to move the file to
-    * @param {{
-    *    overwrite: Boolean
-    * }} settings Additional settings that can be enabled for the process
     * @returns {this} An instance of FileTools
     */
-   moveFile(path, newDir, settings = {overwrite: false}) {
+   moveFile(path, newDir) {
       if (!path) {
          throw new Error("ERROR with moveFile: oldPath is null");
       }
@@ -59,7 +56,7 @@ exports.FileTools = class {
       if (!newDir) {
          throw new Error("ERROR with moveFile: newPath is null");
       }
-      fs.copyFileSync(path, newDir, {overwrite: settings.overwrite});
+      fs.copyFileSync(path, newDir);
       this.deleteFile(path);
       return this;
    }
