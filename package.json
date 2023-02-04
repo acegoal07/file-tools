@@ -1,6 +1,6 @@
 {
    "name": "@acegoal07/file-tools",
-   "version": "1.0.5",
+   "version": "1.0.6",
    "description": "A package of easy to use tools for interacting with files using javascript",
    "main": "index.js",
    "repository": {
@@ -12,8 +12,7 @@
       "build+publish": "npm run build && cls && cd dist && cls && npm publish",
       "buildTypes": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types",
       "tscBuild": "npx tsc",
-      "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist",
-      "test": "npm run build && cls && npm i && cls && node tests/test1.js && del package-lock.json && rmdir /s /q node_modules"
+      "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist"
    },
    "keywords": [
       "acegoal07",
