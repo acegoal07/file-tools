@@ -16,7 +16,10 @@ exports.FileTools = class {
     */
    createFile(path, data = null) {
       if (!path) {
-         throw new Error("ERROR with createFile: Path is null");
+         throw new Error("ERROR with createFile: path is null");
+      }
+      if (this.fileExists(path)) {
+         throw new Error("ERROR with createFile: The file you want to create already exists");
       }
       fs.writeFileSync(path, "");
       if (data) {
