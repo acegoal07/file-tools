@@ -1,6 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////
-const fs = require("fs");
+const fs = require("fs"),
+   fse = require("fs-extra");
 ///////////////////////////////////////////////////////////////////////////
 // Class /////////////////////////////////////////////////////////////////
 /**
@@ -17,22 +18,23 @@ exports.DirectoryTools = class {
       if (!dir) {
          throw new Error("ERROR with dirExist: dir is null");
       }
-      if (!fs.statSync(dir).isDirectory()) {
-         throw new Error("ERROR with dirExist: The path you have provided is not to a directory");
-      }
-      if (fs.existsSync(dir)) {
-         if (!fs.statSync(dir).isDirectory()) {
-            throw new Error("ERROR with dirExist: The path you have provided is not to a directory");
+      try {
+         if (fs.existsSync(dir)) {
+            if (!fs.statSync(dir).isDirectory()) {
+               throw new Error("ERROR with dirExist: The path you have provided is not to a directory");
+            }
+            return true;
          }
-         return true;
+         return false;         
+      } catch(error) {
+         return false;
       }
-      return false;
    }
    /**
     * Creates a folder where you specify
     *
     * @param {String} dir The path to where you want the folder created
-    * @returns {this} An instance of UniversalFileTools
+    * @returns {this} An instance of DirectoryTools
     */
    createDir(dir) {
       if (!dir) {
@@ -48,14 +50,11 @@ exports.DirectoryTools = class {
     *
     * @param {String} dir The path to the folder you want deleted
     * @param {Boolean} force Whether or not it should force delete the folder
-    * @returns {this} An instance of UniversalFileTools
+    * @returns {this} An instance of DirectoryTools
     */
    deleteDir(dir, force = false) {
       if (!dir) {
          throw new Error("ERROR with deleteDir: dir is null");
-      }
-      if (!fs.statSync(dir).isDirectory()) {
-         throw new Error("ERROR with deleteDir: The path you have provided is not to a directory");
       }
       if (!this.dirExists(dir)) {
          throw new Error("ERROR with deleteDir: The directory your trying to delete does not exits");
@@ -73,9 +72,6 @@ exports.DirectoryTools = class {
     * @returns {Boolean} Whether or not the directory is empty
     */
    isDirEmpty(dir) {
-      if (!fs.statSync(dir).isDirectory()) {
-         throw new Error("ERROR with isDirEmpty: The path you have provided is not to a directory");
-      }
       return fs.readdirSync(dir).length === 0;
    }
    /**
@@ -88,9 +84,6 @@ exports.DirectoryTools = class {
    getFileType(dir, fileType) {
       if (!dir) {
          throw new Error("ERROR with getFileType: dir is null");
-      }
-      if (!fs.statSync(dir).isDirectory()) {
-         throw new Error("ERROR with getFileType: The path you have provided is not to a directory");
       }
       if (!this.dirExists(dir)) {
          throw new Error("ERROR with getFileType: The directory you are trying to reach does not exist");
@@ -108,5 +101,83 @@ exports.DirectoryTools = class {
          }
       }
       return array;
+   }
+   /**
+    * Renames the directory you specify
+    * 
+    * @param {String} dir The path to the directory
+    * @param {String} newName The new name you want to give the directory
+    * @returns {this} An instance of DirectoryTools
+    */
+   renameDir(dir, newName) {
+      if (!dir) {
+         throw new Error("ERROR with renameDir: dir is null");
+      }
+      if (!newName) {
+         throw new Error("ERROR with renameDir: newName is null");
+      }
+      if (!this.dirExists(dir)) {
+         throw new Error("ERROR with renameDir: The directory you are trying to reach does not exist");
+      }
+      fs.renameSync(dir, dir.replace(dir.split(/[\\/]/).pop(), newName));
+      return this;
+   }
+   /**
+    * 
+    * @param {String} dir The path to the directory
+    * @param {String} newDir The new path of the directory
+    * @param {{
+    *    overwrite: Boolean
+    * }} settings Additional settings that can be used in the process
+    * @returns {this} An instance of DirectoryTools
+    */
+   moveDir(dir, newDir, settings = {overwrite: false}) {
+      if (!dir) {
+         throw new Error("ERROR with moveDir: dir is null");
+      }
+      if (!newDir) {
+         throw new Error("ERROR with moveDir: newDir is null");
+      }
+      if (!this.dirExists(dir)) {
+         throw new Error("ERROR with moveDir: The directory you are trying to reach does not exist");
+      }
+      fse.moveSync(dir, newDir, {overwrite: settings.overwrite});
+      return this;
+   }
+   /**
+    * 
+    * @param {String} dir The path to the directory
+    * @param {String} copyDir The to the copy directory
+    * @param {{
+    *    overwrite: boolean
+    * }} settings Additional settings that can be used in the process
+    * @returns {this} An instance of DirectoryTools
+    */
+   copyDir(dir, copyDir = null, settings = {overwrite: false}) {
+      if (!dir) {
+         throw new Error("ERROR with copyDir: dir is null");
+      }
+      if (!this.dirExists(dir)) {
+         throw new Error("ERROR with copyDir: The directory you are trying to reach does not exist");
+      }
+      if (!copyDir) {
+         const folderName = dir.split("/").pop();
+         if (!this.dirExists(dir.replace(`${folderName}`, `${folderName}-copy`))) {
+            let count = 1;
+            while (true) {
+               if (!this.dirExists(dir.replace(`${folderName}`, `${folderName}-copy${count}`))) {
+                  fse.copySync(dir, dir.replace(`${folderName}`, `${folderName}-copy${count}`, {overwrite: settings.overwrite}));
+                  break;
+               } else {
+                  count += 1;
+               }
+            }
+         } else {
+            fse.copySync(dir, dir.replace(`${folderName}`, `${folderName}-copy`, {overwrite: settings.overwrite}));
+         }
+      } else {
+         fse.copySync(dir, copyDir, {overwrite: settings.overwrite});
+      }
+      return this;
    }
 }

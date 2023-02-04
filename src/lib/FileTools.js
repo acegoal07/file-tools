@@ -12,7 +12,7 @@ exports.FileTools = class {
     *
     * @param {String} path The path to the file you want to create
     * @param {String} data The data you want to put in the file
-    * @returns {this} An instance of UniversalFileTools
+    * @returns {this} An instance of FileTools
     */
    createFile(path, data = null) {
       if (!path) {
@@ -28,7 +28,7 @@ exports.FileTools = class {
     * Deletes the file you specify
     *
     * @param {String} path The path to the file you want to delete
-    * @returns {this} An instance of UniversalFileTools
+    * @returns {this} An instance of FileTools
     */
    deleteFile(path) {
       if (!path) {
@@ -44,9 +44,12 @@ exports.FileTools = class {
     *
     * @param {String} path The path to the file you want to move
     * @param {String} newDir The path to the folder you want to move the file to
-    * @returns {this} An instance of UniversalFileTools
+    * @param {{
+    *    overwrite: Boolean
+    * }} settings Additional settings that can be enabled for the process
+    * @returns {this} An instance of FileTools
     */
-   moveFile(path, newDir) {
+   moveFile(path, newDir, settings = {overwrite: false}) {
       if (!path) {
          throw new Error("ERROR with moveFile: oldPath is null");
       }
@@ -56,7 +59,7 @@ exports.FileTools = class {
       if (!newDir) {
          throw new Error("ERROR with moveFile: newPath is null");
       }
-      fs.copyFileSync(path, newDir);
+      fs.copyFileSync(path, newDir, {overwrite: settings.overwrite});
       this.deleteFile(path);
       return this;
    }
@@ -65,9 +68,9 @@ exports.FileTools = class {
     *
     * @param {String} path The path to the file you want to copy
     * @param {String} copyPath The path to the location you want the new file saved
-    * @returns {this} An instance of UniversalFileTools
+    * @returns {this} An instance of FileTools
     */
-   copyFile(path, copyPath) {
+   copyFile(path, copyPath = null) {
       if (!path) {
          throw new Error("ERROR with copyFile: path is null");
       }
@@ -99,7 +102,7 @@ exports.FileTools = class {
     *
     * @param {String} path The path to the file you want to rename
     * @param {String} newName The name you want to change the file to
-    * @returns {this} An instance of UniversalFileTools
+    * @returns {this} An instance of FileTools
     */
    renameFile(path, newName) {
       if (!path) {
@@ -124,83 +127,17 @@ exports.FileTools = class {
       if (!path) {
          throw new Error("ERROR with fileExist: path is null");
       }
-      if (fs.existsSync(path)) {
-         if (!fs.statSync(path).isFile()) {
-            throw new Error("ERROR with fileExist: The path you have provided is not to a file");
+      try {
+         if (fs.existsSync(path)) {
+            if (!fs.statSync(path).isFile()) {
+               throw new Error("ERROR with fileExist: The path you have provided is not to a file");
+            }
+            return true;
          }
-         return true;
+         return false;
+      } catch(error) {
+         return false;
       }
-      return false;
-   }
-   /**
-    * Returns a boolean whether or not the directory exists
-    *
-    * @param {String} dir The path to the directory you want to check
-    * @deprecated This function has been moved to DirectoryTools
-    * @returns {Boolean} A boolean
-    */
-   dirExists(dir) {
-      process.emitWarning("This function has been moved to DirectoryTools");
-      if (!dir) {
-         throw new Error("ERROR with dirExist: dir is null");
-      }
-      if (fs.existsSync(dir)) {
-         if (!fs.statSync(dir).isDirectory()) {
-            throw new Error("ERROR with dirExist: The path you have provided is not to a directory");
-         }
-         return true;
-      }
-      return false;
-   }
-   /**
-    * Creates a folder where you specify
-    *
-    * @param {String} dir The path to where you want the folder created
-    * @deprecated This function has been moved to DirectoryTools
-    * @returns {this} An instance of UniversalFileTools
-    */
-   createDir(dir) {
-      process.emitWarning("This function has been moved to DirectoryTools");
-      if (!dir) {
-         throw new Error("ERROR with createDir: dir is null");
-      }
-      if (!this.dirExists(dir)) {
-         fs.mkdirSync(dir, { recursive: true });
-      }
-      return this;
-   }
-   /**
-    * Deletes specified directory
-    *
-    * @param {String} dir The path to the folder you want deleted
-    * @param {Boolean} force Whether or not it should force delete the folder
-    * @deprecated This function has been moved to DirectoryTools
-    * @returns {this} An instance of UniversalFileTools
-    */
-   deleteDir(dir, force = false) {
-      process.emitWarning("This function has been moved to DirectoryTools");
-      if (!dir) {
-         throw new Error("ERROR with deleteDir: dir is null");
-      }
-      if (!this.dirExists(dir)) {
-         throw new Error("ERROR with deleteDir: The directory your trying to delete does not exits");
-      }
-      if (!this.isDirEmpty(dir) && !force) {
-         throw new Error("ERROR with deleteDir: The directory your trying to delete is not empty to delete this folder you need force enabled");
-      }
-      fs.rmSync(dir, { recursive: true, force: force });
-      return this;
-   }
-   /**
-    * Checks whether or not the folder specified contains any files
-    *
-    * @param {String} dir The path to the folder you want to check
-    * @deprecated This function has been moved to DirectoryTools
-    * @returns {Boolean} Whether or not the directory is empty
-    */
-   isDirEmpty(dir) {
-      process.emitWarning("This function has been moved to DirectoryTools");
-      return fs.readdirSync(dir).length === 0;
    }
    /**
     * Returns the data from the file you specify
@@ -219,7 +156,7 @@ exports.FileTools = class {
     *
     * @param {String} path The path to the file you want to write the data to
     * @param data The data you want to write to the file
-    * @returns {this} An instance of UniversalFileTools
+    * @returns {this} An instance of FileTools
     */
    writeFile(path, data) {
       if (!path) {
@@ -241,7 +178,7 @@ exports.FileTools = class {
     *
     * @param {String} path The path to the file you want to get the data from
     * @param {String} copyPath The path to the file you want to write the data to
-    * @returns {this} An instance of UniversalFileTools
+    * @returns {this} An instance of FileTools
     */
    writeCopy(path, copyPath) {
       if (!path) {
@@ -254,34 +191,10 @@ exports.FileTools = class {
       return this;
    }
    /**
-    * Returns an array of file names with the specified file type
-    *
-    * @param {String} dir The path to the directory you want to search
-    * @param {String} fileType The file type you want to get the names of
-    * @deprecated This function has been moved to DirectoryTools
-    * @returns {Array} An array filled with all the names of the files
-    */
-   getFileType(dir, fileType) {
-      process.emitWarning("This function has been moved to DirectoryTools");
-      if (!dir) {
-         throw new Error("ERROR with getFileType: dir is null");
-      }
-      if (!fileType) {
-         throw new Error("ERROR with getFileTypes: fileType is not specified");
-      }
-      let array = [];
-      for (const file of fs.readdirSync(dir)) {
-         if (file.toLowerCase().endsWith(fileType.toLowerCase())) {
-            array.push(file);
-         }
-      }
-      return array;
-   }
-   /**
     * Removes all the data from a file
     * 
     * @param {String} path 
-    * @returns {this} An instance of UniversalFileTools
+    * @returns {this} An instance of FileTools
     */
    blankFile(path) {
       if (!path) {

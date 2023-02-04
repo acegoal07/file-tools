@@ -19,6 +19,9 @@
 * `path {String}` - The path to where you want to create the file
 * `data {Anything}` - The data you want to put in the file
 
+**Returns:**
+* `FileTools` - An instance of FileTools
+
 **Example:**
 ```js
 const { FileTools } = require("@acegoal07/file-tools");
@@ -32,6 +35,9 @@ FileTools().createFile("file.txt", "Hello World!");
 
 **Parameters:**
 * `path {String}` - The path to file you want to delete
+
+**Returns:**
+* `FileTools` - An instance of FileTools
 
 **Example:**
 ```js
@@ -48,6 +54,9 @@ FileTools().deleteFile("file.txt");
 * `path {String}` - The path to the file you want to move
 * `newDir {String}` - The path to the folder you want to move the file to
 
+**Returns:**
+* `FileTools` - An instance of FileTools
+
 **Example:**
 ```js
 const { FileTools } = require("@acegoal07/file-tools");
@@ -62,6 +71,9 @@ FileTools().moveFile("file.txt", "files/file.txt");
 **Parameters:**
 * `path {String}` - The path to the file you want to copy
 * `copyPath {String}` - The path to the location you want the new file saved
+
+**Returns:**
+* `FileTools` - An instance of FileTools
 
 **Example:**
 ```js
@@ -80,6 +92,9 @@ FileTools().copyFile("file.txt", "files/newFile.txt");
 **Parameters:**
 * `path {String}` - The path to the file you want to rename
 * `newName {String} - The name you want to change the file to
+
+**Returns:**
+* `FileTools` - An instance of FileTools
 
 **Example:**
 ```js
@@ -113,20 +128,6 @@ console.log(FileTools().fileExists("folder"));
 ```
 
 ***
-## isDirEmpty
-> **Description** - Checks whether or not the specified folder contains files
-
-**Parameters:**
-* `dir {String}` - The path to the directory
-
-**Example:**
-```js
-const { FileTools } = require("@acegoal07/file-tools");
-
-FileTools().deleteDir("folder");
-```
-
-***
 ## readFile
 > **Description** - Returns the data from the file you specify
 
@@ -151,6 +152,9 @@ console.log(FileTools().readFile("file.txt"));
 * `path {String}` - The path to the file you want to write the data to
 * `data {Anything}` - The data you want to write to the file
 
+**Returns:**
+* `FileTools` - An instance of FileTools
+
 **Example:**
 ```js
 const { FileTools } = require("@acegoal07/file-tools");
@@ -165,6 +169,9 @@ FileTools().writeFile("file.txt", "Hello World!");
 **Parameters:**
 * `path {String}` - The path to the file you want to get the data from
 * `copyPath {String}` - The path to the file you want to write the data to
+
+**Returns:**
+* `FileTools` - An instance of FileTools
 
 **Example:**
 ```js

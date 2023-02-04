@@ -30,7 +30,8 @@
    },
    "homepage": "https://github.com/acegoal07/file-tools#readme",
    "dependencies": {
-      "r-json": "^1.2.10"
+      "r-json": "^1.2.10",
+      "fs-extra": "^11.1.0"
    },
    "publishConfig": {
       "access": "public"
