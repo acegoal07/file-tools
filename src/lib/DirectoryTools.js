@@ -126,12 +126,10 @@ exports.DirectoryTools = class {
     * 
     * @param {String} dir The path to the directory
     * @param {String} newDir The new path of the directory
-    * @param {{
-    *    overwrite: Boolean
-    * }} settings Additional settings that can be used in the process
+    * @param {Boolean} overwrite Whether or not to replace files with the same name
     * @returns {this} An instance of DirectoryTools
     */
-   moveDir(dir, newDir, settings = {overwrite: false}) {
+   moveDir(dir, newDir, overwrite = false) {
       if (!dir) {
          throw new Error("ERROR with moveDir: dir is null");
       }
@@ -141,7 +139,7 @@ exports.DirectoryTools = class {
       if (!this.dirExists(dir)) {
          throw new Error("ERROR with moveDir: The directory you are trying to reach does not exist");
       }
-      fse.moveSync(dir, newDir, {overwrite: settings.overwrite});
+      fse.moveSync(dir, newDir, {overwrite: overwrite});
       return this;
    }
    /**
@@ -149,20 +147,21 @@ exports.DirectoryTools = class {
     * @param {String} dir The path to the directory
     * @param {String} copyDir The to the copy directory
     * @param {{
+    *    copyDir: String,
     *    overwrite: boolean
     * }} settings Additional settings that can be used in the process
     * @returns {this} An instance of DirectoryTools
     */
-   copyDir(dir, copyDir = null, settings = {overwrite: false}) {
+   copyDir(dir, settings = {copyDir: null, overwrite: false}) {
       if (!dir) {
          throw new Error("ERROR with copyDir: dir is null");
       }
       if (!this.dirExists(dir)) {
          throw new Error("ERROR with copyDir: The directory you are trying to reach does not exist");
       }
-      if (!copyDir) {
+      if (!settings.copyDir) {
          const folderName = dir.split("/").pop();
-         if (!this.dirExists(dir.replace(`${folderName}`, `${folderName}-copy`))) {
+         if (!this.dirExists(dir.replace(`${folderName}`, `${folderName}-copy`)) && !settings.overwrite) {
             let count = 1;
             while (true) {
                if (!this.dirExists(dir.replace(`${folderName}`, `${folderName}-copy${count}`))) {
@@ -176,8 +175,24 @@ exports.DirectoryTools = class {
             fse.copySync(dir, dir.replace(`${folderName}`, `${folderName}-copy`, {overwrite: settings.overwrite}));
          }
       } else {
-         fse.copySync(dir, copyDir, {overwrite: settings.overwrite});
+         fse.copySync(dir, settings.copyDir, {overwrite: settings.overwrite});
       }
+      return this;
+   }
+   /**
+    * Ensures that there are no files in a directory and deletes any files if there are some
+    * 
+    * @param {String} dir The path to the directory you want to empty
+    * @returns {this} An instance of DirectoryTools
+    */
+   emptyDir(dir) {
+      if (!dir) {
+         throw new Error("ERROR with emptyDir: dir is null");
+      }
+      if (!this.dirExists(dir)) {
+         throw new Error("ERROR with emptyDir: The directory you are trying to reach does not exist");
+      }
+      fse.emptyDirSync(dir);
       return this;
    }
 }

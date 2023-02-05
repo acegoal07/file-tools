@@ -1,6 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////
-const fs = require("fs");
+const fs = require("fs"),
+   fse = require("fs-extra");
 ///////////////////////////////////////////////////////////////////////////
 // Class /////////////////////////////////////////////////////////////////
 /**
@@ -47,9 +48,10 @@ exports.FileTools = class {
     *
     * @param {String} path The path to the file you want to move
     * @param {String} newDir The path to the folder you want to move the file to
+    * @param {Boolean} overwrite Whether or not to replace files with the same name
     * @returns {this} An instance of FileTools
     */
-   moveFile(path, newDir) {
+   moveFile(path, newDir, overwrite = false) {
       if (!path) {
          throw new Error("ERROR with moveFile: oldPath is null");
       }
@@ -59,27 +61,29 @@ exports.FileTools = class {
       if (!newDir) {
          throw new Error("ERROR with moveFile: newPath is null");
       }
-      fs.copyFileSync(path, newDir);
-      this.deleteFile(path);
+      fse.moveSync(path, newDir, {overwrite: overwrite});
       return this;
    }
    /**
     * Duplicates the file you specify
     *
     * @param {String} path The path to the file you want to copy
-    * @param {String} copyPath The path to the location you want the new file saved
+    * @param {{
+    *    copyPath: String,
+    *    overwrite: Boolean
+    * }} settings Additional settings that can be used in the process
     * @returns {this} An instance of FileTools
     */
-   copyFile(path, copyPath = null) {
+   copyFile(path, settings = {copyPath: null, overwrite: false}) {
       if (!path) {
          throw new Error("ERROR with copyFile: path is null");
       }
       if (!this.fileExists(path)) {
          throw new Error(`ERROR with copyFile: File ${path} does not exists`);
       }
-      if (!copyPath) {
+      if (!settings.copyPath) {
          const fileType = path.split(".").pop();
-         if (this.fileExists(path.replace(`.${fileType}`, `-copy.${fileType}`))) {
+         if (this.fileExists(path.replace(`.${fileType}`, `-copy.${fileType}`)) && !settings.overwrite) {
             let count = 1;
             while (true) {
                if (!this.fileExists(path.replace(`.${fileType}`, `-copy${count}.${fileType}`))) {
@@ -90,10 +94,10 @@ exports.FileTools = class {
                }
             }
          } else {
-            fs.copyFileSync(path, path.replace(`.${fileType}`, `-copy.${fileType}`));
+            fse.copySync(path, path.replace(`.${fileType}`, `-copy.${fileType}`), {overwrite: settings.overwrite});
          }
       } else {
-         fs.copyFileSync(path, copyPath);
+         fse.copySync(path, settings.copyPath, {overwrite: settings.overwrite});
       }
       return this;
    }

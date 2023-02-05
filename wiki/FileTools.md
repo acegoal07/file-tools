@@ -53,6 +53,7 @@ FileTools().deleteFile("file.txt");
 **Parameters:**
 * `path {String}` - The path to the file you want to move
 * `newDir {String}` - The path to the folder you want to move the file to
+* `overwrite {Boolean}` - Whether or not to replace files with the same name
 
 **Returns:**
 * `FileTools` - An instance of FileTools
@@ -61,7 +62,11 @@ FileTools().deleteFile("file.txt");
 ```js
 const { FileTools } = require("@acegoal07/file-tools");
 
+// Without overwrite enabled
 FileTools().moveFile("file.txt", "files/file.txt");
+
+// With overwrite enabled
+FileTools().moveFile("file.txt", "files/file.txt", true);
 ```
 
 ***
@@ -70,7 +75,11 @@ FileTools().moveFile("file.txt", "files/file.txt");
 
 **Parameters:**
 * `path {String}` - The path to the file you want to copy
+* `settings {Object}` - Additional settings that can be used in the process
+
+**Additional Settings**
 * `copyPath {String}` - The path to the location you want the new file saved
+* `overwrite {Boolean}` - whether or not to overwrite a folder or file with the same name
 
 **Returns:**
 * `FileTools` - An instance of FileTools
@@ -81,8 +90,15 @@ const { FileTools } = require("@acegoal07/file-tools");
 
 // Just create copy duplicate of the file in the same directory
 FileTools().copyFile("file.txt");
+
+// Just create copy duplicate of the file in the same directory and overwrite any file with the same name
+FileTools().copyFile("file.txt", {overwrite: true});
+
 // Creates a copy with a new name or location
-FileTools().copyFile("file.txt", "files/newFile.txt");
+FileTools().copyFile("file.txt", {copyPath: "files/newFile.txt"});
+
+// Creates a copy with a new name or location and overwrite any file with the same name
+FileTools().copyFile("file.txt", {copyPath: "files/newFile.txt", overwrite: true});
 ```
 
 ***

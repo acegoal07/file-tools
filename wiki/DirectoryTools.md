@@ -9,6 +9,7 @@
 * <a href="#renameDir">`renameDir`</a> - Renames the specified directory to the new name
 * <a href="#moveDir">`moveDir`</a> - Move the directory to a new specified location
 * <a href="#copyDir">`copyDir`</a> - Used to make a copy of a directory
+* <a href="#emptyDir">`emptyDir`</a> - Ensures that there are no files in a directory and deletes any files if there are some
 
 ***
 ## dirExists
@@ -126,10 +127,7 @@ DirectoryTools().renameDir("test/testDir", "newFolderName");
 **Parameters:**
 * `dir {String}` - The path to the directory
 * `newDir {String}` - The new path of the directory
-* `settings {Object}` - Additional settings that can be used in the process
-
-**Additional Settings**
-* `overwrite {Boolean}` - whether or not to overwrite a folder or file with the same name
+* `overwrite {Boolean}` - Whether or not to replace files with the same name
 
 **Returns:**
 * `DirectoryTools` - An instance of DirectoryTools
@@ -138,11 +136,11 @@ DirectoryTools().renameDir("test/testDir", "newFolderName");
 ```js
 const { DirectoryTools } = require("@acegoal07/file-tools");
 
-// Without addition settings
+// Without overwrite enabled
 DirectoryTools().moveDir("test", "folder/test");
 
-// With addition settings
-DirectoryTools().moveDir("test", "folder/test", {overwrite: true});
+// With overwrite enabled
+DirectoryTools().moveDir("test", "folder/test", true);
 ```
 
 ***
@@ -151,10 +149,10 @@ DirectoryTools().moveDir("test", "folder/test", {overwrite: true});
 
 **Parameters:**
 * `dir {String}` - The path to the directory
-* `copyDir {String}` - The to the copy directory
 * `settings {Object}` - Additional settings that can be used in the process
 
 **Additional Settings**
+* `copyDir {String}` - The to the copy directory
 * `overwrite {Boolean}` - whether or not to overwrite a folder or file with the same name
 
 **Returns:**
@@ -164,12 +162,30 @@ DirectoryTools().moveDir("test", "folder/test", {overwrite: true});
 ```js
 const { DirectoryTools } = require("@acegoal07/file-tools");
 
-// without specified copyDir
+// Just create duplicate of the folder in the same directory
 DirectoryTools().copyDir("test");
 
-// Without addition settings
-DirectoryTools().copyDir("test", "folder/test");
+// Just create duplicate of the folder in the same directory and overwrite any folder with the same name
+DirectoryTools().copyDir("test", {overwrite: true});
 
-// With addition settings
-DirectoryTools().moveDir("test", "folder/test", {overwrite: true});
+// Creates a copy with a new name or location
+DirectoryTools().copyDir("test", {copyDir: "folder/test"});
+
+// Creates a copy with a new name or location and overwrite any folder with the same name
+DirectoryTools().moveDir("test", {copyDir: "folder/test", overwrite: true});
+```
+## emptyDir
+> **Description** - Ensures that there are no files in a directory and deletes any files if there are some
+
+**Parameters:**
+* `dir {String}` - The path to the directory you want to empty
+
+**Returns:**
+* `DirectoryTools` - An instance of DirectoryTools
+
+**Example:**
+```js
+const { DirectoryTools } = require("@acegoal07/file-tools");
+
+DirectoryTools().emptyDir("folder");
 ```
