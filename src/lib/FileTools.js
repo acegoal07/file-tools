@@ -20,7 +20,7 @@ exports.FileTools = class {
          throw new Error("ERROR with createFile: path is null");
       }
       if (this.fileExists(path)) {
-         throw new Error("ERROR with createFile: The file you want to create already exists");
+         throw new Error(`ERROR with createFile: File "${path}" already exists`);
       }
       fs.writeFileSync(path, "");
       if (data) {
@@ -39,7 +39,7 @@ exports.FileTools = class {
          throw new Error("ERROR with deleteFile: path is null");
       }
       if (!this.fileExists(path)) {
-         throw new Error(`ERROR with deleteFile: File ${path} does not exists`);
+         throw new Error(`ERROR with deleteFile: File "${path}" does not exists`);
       }
       return fs.unlinkSync(path);
    }
@@ -56,7 +56,7 @@ exports.FileTools = class {
          throw new Error("ERROR with moveFile: oldPath is null");
       }
       if (!this.fileExists(path)) {
-         throw new Error(`ERROR with moveFile: File ${path} does not exists`);
+         throw new Error(`ERROR with moveFile: File "${path}" does not exists`);
       }
       if (!newDir) {
          throw new Error("ERROR with moveFile: newPath is null");
@@ -79,22 +79,19 @@ exports.FileTools = class {
          throw new Error("ERROR with copyFile: path is null");
       }
       if (!this.fileExists(path)) {
-         throw new Error(`ERROR with copyFile: File ${path} does not exists`);
+         throw new Error(`ERROR with copyFile: File "${path}" does not exists`);
       }
       if (!settings.copyPath) {
-         const fileType = path.split(".").pop();
-         if (this.fileExists(path.replace(`.${fileType}`, `-copy.${fileType}`)) && !settings.overwrite) {
-            let count = 1;
-            while (true) {
-               if (!this.fileExists(path.replace(`.${fileType}`, `-copy${count}.${fileType}`))) {
-                  fs.copyFileSync(path, path.replace(`.${fileType}`, `-copy${count}.${fileType}`));
+         let fileName = path.split("/").pop().split(".")[0];
+         if (this.fileExists(path.replace(`${fileName}`, `${fileName} - copy`)) && !settings.overwrite) {
+            for (let count = 1; count < Infinity; count++) {
+               if (!this.fileExists(path.replace(`${fileName}`, `${fileName} - copy (${count})`))) {
+                  fs.copyFileSync(path, path.replace(`${fileName}`, `${fileName} - copy (${count})`));
                   break;
-               } else {
-                  count += 1;
                }
             }
          } else {
-            fse.copySync(path, path.replace(`.${fileType}`, `-copy.${fileType}`), {overwrite: settings.overwrite});
+            fse.copySync(path, path.replace(`${fileName}`, `${fileName} - copy`), {overwrite: settings.overwrite});
          }
       } else {
          fse.copySync(path, settings.copyPath, {overwrite: settings.overwrite});
@@ -113,7 +110,7 @@ exports.FileTools = class {
          throw new Error("ERROR with renameFile: path is null");
       }
       if (!this.fileExists(path)) {
-         throw new Error(`ERROR with renameFile: The provided file does not exists`);
+         throw new Error(`ERROR with renameFile: File "${path}" does not exists`);
       }
       if (!newName) {
          throw new Error("ERROR with renameFile: newName is null")
@@ -171,7 +168,7 @@ exports.FileTools = class {
       }
       if (typeof data == "object") {
          fs.writeFileSync(path, JSON.stringify(data, null, 2));
-      } 
+      }
       else {
          fs.writeFileSync(path, data);
       }
@@ -196,8 +193,8 @@ exports.FileTools = class {
    }
    /**
     * Removes all the data from a file
-    * 
-    * @param {String} path 
+    *
+    * @param {String} path
     * @returns {this} An instance of FileTools
     */
    blankFile(path) {

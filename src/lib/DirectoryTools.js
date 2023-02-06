@@ -25,7 +25,7 @@ exports.DirectoryTools = class {
             }
             return true;
          }
-         return false;         
+         return false;
       } catch(error) {
          return false;
       }
@@ -57,7 +57,7 @@ exports.DirectoryTools = class {
          throw new Error("ERROR with deleteDir: dir is null");
       }
       if (!this.dirExists(dir)) {
-         throw new Error("ERROR with deleteDir: The directory your trying to delete does not exits");
+         throw new Error(`ERROR with deleteDir: The directory "${dir}" does not exist`);
       }
       if (!this.isDirEmpty(dir) && !force) {
          throw new Error("ERROR with deleteDir: The directory your trying to delete is not empty to delete this folder you need force enabled");
@@ -86,7 +86,7 @@ exports.DirectoryTools = class {
          throw new Error("ERROR with getFileType: dir is null");
       }
       if (!this.dirExists(dir)) {
-         throw new Error("ERROR with getFileType: The directory you are trying to reach does not exist");
+         throw new Error(`ERROR with getFileType: The directory "${dir}" does not exist`);
       }
       if (this.isDirEmpty(dir)) {
          throw new Error("ERROR with getFileType: The directory you are trying to retrieve files from is empty");
@@ -104,7 +104,7 @@ exports.DirectoryTools = class {
    }
    /**
     * Renames the directory you specify
-    * 
+    *
     * @param {String} dir The path to the directory
     * @param {String} newName The new name you want to give the directory
     * @returns {this} An instance of DirectoryTools
@@ -117,13 +117,13 @@ exports.DirectoryTools = class {
          throw new Error("ERROR with renameDir: newName is null");
       }
       if (!this.dirExists(dir)) {
-         throw new Error("ERROR with renameDir: The directory you are trying to reach does not exist");
+         throw new Error(`ERROR with renameDir: The directory "${dir}" not exist`);
       }
       fs.renameSync(dir, dir.replace(dir.split(/[\\/]/).pop(), newName));
       return this;
    }
    /**
-    * 
+    *
     * @param {String} dir The path to the directory
     * @param {String} newDir The new path of the directory
     * @param {Boolean} overwrite Whether or not to replace files with the same name
@@ -137,13 +137,13 @@ exports.DirectoryTools = class {
          throw new Error("ERROR with moveDir: newDir is null");
       }
       if (!this.dirExists(dir)) {
-         throw new Error("ERROR with moveDir: The directory you are trying to reach does not exist");
+         throw new Error(`ERROR with moveDir: The directory "${dir}" does not exist`);
       }
       fse.moveSync(dir, newDir, {overwrite: overwrite});
       return this;
    }
    /**
-    * 
+    *
     * @param {String} dir The path to the directory
     * @param {String} copyDir The to the copy directory
     * @param {{
@@ -157,7 +157,7 @@ exports.DirectoryTools = class {
          throw new Error("ERROR with copyDir: dir is null");
       }
       if (!this.dirExists(dir)) {
-         throw new Error("ERROR with copyDir: The directory you are trying to reach does not exist");
+         throw new Error(`ERROR with copyDir: The directory "${dir}" does not exist`);
       }
       if (!settings.copyDir) {
          const folderName = dir.split("/").pop();
@@ -181,7 +181,7 @@ exports.DirectoryTools = class {
    }
    /**
     * Ensures that there are no files in a directory and deletes any files if there are some
-    * 
+    *
     * @param {String} dir The path to the directory you want to empty
     * @returns {this} An instance of DirectoryTools
     */
@@ -190,7 +190,7 @@ exports.DirectoryTools = class {
          throw new Error("ERROR with emptyDir: dir is null");
       }
       if (!this.dirExists(dir)) {
-         throw new Error("ERROR with emptyDir: The directory you are trying to reach does not exist");
+         throw new Error(`ERROR with emptyDir: The directory "${dir}" does not exist`);
       }
       fse.emptyDirSync(dir);
       return this;
