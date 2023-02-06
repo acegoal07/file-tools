@@ -161,18 +161,15 @@ exports.DirectoryTools = class {
       }
       if (!settings.copyDir) {
          const folderName = dir.split("/").pop();
-         if (!this.dirExists(dir.replace(`${folderName}`, `${folderName}-copy`)) && !settings.overwrite) {
-            let count = 1;
-            while (true) {
-               if (!this.dirExists(dir.replace(`${folderName}`, `${folderName}-copy${count}`))) {
-                  fse.copySync(dir, dir.replace(`${folderName}`, `${folderName}-copy${count}`, {overwrite: settings.overwrite}));
+         if (!this.dirExists(dir.replace(`${folderName}`, `${folderName} - copy`)) && !settings.overwrite) {
+            for (let count = 1; count < Infinity; count++) {
+               if (!this.dirExists(dir.replace(`${folderName}`, `${folderName} - copy (${count})`))) {
+                  fse.copySync(dir, dir.replace(`${folderName}`, `${folderName} - copy (${count})`, {overwrite: settings.overwrite}));
                   break;
-               } else {
-                  count += 1;
                }
             }
          } else {
-            fse.copySync(dir, dir.replace(`${folderName}`, `${folderName}-copy`, {overwrite: settings.overwrite}));
+            fse.copySync(dir, dir.replace(`${folderName}`, `${folderName} - copy`, {overwrite: settings.overwrite}));
          }
       } else {
          fse.copySync(dir, settings.copyDir, {overwrite: settings.overwrite});
