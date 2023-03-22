@@ -161,7 +161,7 @@ exports.DirectoryTools = class {
       }
       if (!settings.copyDir) {
          const folderName = dir.split("/").pop();
-         if (!this.dirExists(dir.replace(`${folderName}`, `${folderName} - copy`)) && !settings.overwrite) {
+         if (this.dirExists(dir.replace(`${folderName}`, `${folderName} - copy`)) && !settings.overwrite) {
             for (let count = 1; count < Infinity; count++) {
                if (!this.dirExists(dir.replace(`${folderName}`, `${folderName} - copy (${count})`))) {
                   fse.copySync(dir, dir.replace(`${folderName}`, `${folderName} - copy (${count})`, {overwrite: settings.overwrite}));
