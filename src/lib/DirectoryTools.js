@@ -62,7 +62,7 @@ exports.DirectoryTools = class {
       if (!this.isDirEmpty(dir) && !force) {
          throw new Error("ERROR with deleteDir: The directory your trying to delete is not empty to delete this folder you need force enabled");
       }
-      fs.rmSync(dir, { recursive: true, force: force });
+      fs.rmSync(dir, { recursive: true, force });
       return this;
    }
    /**
@@ -94,7 +94,7 @@ exports.DirectoryTools = class {
       if (!fileType) {
          throw new Error("ERROR with getFileTypes: fileType is not specified");
       }
-      let array = [];
+      const array = [];
       for (const file of fs.readdirSync(dir)) {
          if (file.toLowerCase().endsWith(fileType.toLowerCase())) {
             array.push(file);
@@ -139,7 +139,7 @@ exports.DirectoryTools = class {
       if (!this.dirExists(dir)) {
          throw new Error(`ERROR with moveDir: The directory "${dir}" does not exist`);
       }
-      fse.moveSync(dir, newDir, {overwrite: overwrite});
+      fse.moveSync(dir, newDir, {overwrite});
       return this;
    }
    /**

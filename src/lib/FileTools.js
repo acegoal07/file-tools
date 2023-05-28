@@ -61,7 +61,7 @@ exports.FileTools = class {
       if (!newDir) {
          throw new Error("ERROR with moveFile: newPath is null");
       }
-      fse.moveSync(path, newDir, {overwrite: overwrite});
+      fse.moveSync(path, newDir, {overwrite});
       return this;
    }
    /**
@@ -82,7 +82,7 @@ exports.FileTools = class {
          throw new Error(`ERROR with copyFile: File "${path}" does not exists`);
       }
       if (!settings.copyPath) {
-         let fileName = path.split("/").pop().split(".")[0];
+         const fileName = path.split("/").pop().split(".")[0];
          if (this.fileExists(path.replace(`${fileName}`, `${fileName} - copy`)) && !settings.overwrite) {
             for (let count = 1; count < Infinity; count++) {
                if (!this.fileExists(path.replace(`${fileName}`, `${fileName} - copy (${count})`))) {

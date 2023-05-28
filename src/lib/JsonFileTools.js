@@ -82,7 +82,7 @@ exports.JsonFileTools = class {
          throw new Error(`ERROR with readAllFiles: The provided folder does not exists`);
       }
       if (format === "Array") {
-         let array = new Array();
+         const array = new Array();
          for (const file of fs.readdirSync(dir)) {
             if (file.toLowerCase().endsWith(".json")) {
                array.push(
@@ -123,7 +123,7 @@ exports.JsonFileTools = class {
       if (!new DirectoryTools().dirExists(dir)) {
          throw new Error("ERROR with getFile: There is no dir at the path you have provided");
       }
-      let array = [];
+      const array = [];
       for (const file of fs.readdirSync(dir)) {
          if (file.toLowerCase().endsWith(".json")) {
             array.push(file);
