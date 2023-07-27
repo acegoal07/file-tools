@@ -15,9 +15,7 @@ exports.DirectoryTools = class {
     * @returns {Boolean} A boolean
     */
    dirExists(dir) {
-      if (!dir) {
-         throw new Error("ERROR with dirExist: dir is null");
-      }
+      if (!dir) {throw new Error("ERROR with dirExist: dir is null");}
       try {
          if (fs.existsSync(dir)) {
             if (!fs.statSync(dir).isDirectory()) {
@@ -37,12 +35,8 @@ exports.DirectoryTools = class {
     * @returns {this} An instance of DirectoryTools
     */
    createDir(dir) {
-      if (!dir) {
-         throw new Error("ERROR with createDir: dir is null");
-      }
-      if (!this.dirExists(dir)) {
-         fs.mkdirSync(dir, { recursive: true });
-      }
+      if (!dir) {throw new Error("ERROR with createDir: dir is null");}
+      if (!this.dirExists(dir)) {fs.mkdirSync(dir, { recursive: true });}
       return this;
    }
    /**
@@ -53,15 +47,9 @@ exports.DirectoryTools = class {
     * @returns {this} An instance of DirectoryTools
     */
    deleteDir(dir, force = false) {
-      if (!dir) {
-         throw new Error("ERROR with deleteDir: dir is null");
-      }
-      if (!this.dirExists(dir)) {
-         throw new Error(`ERROR with deleteDir: The directory "${dir}" does not exist`);
-      }
-      if (!this.isDirEmpty(dir) && !force) {
-         throw new Error("ERROR with deleteDir: The directory your trying to delete is not empty to delete this folder you need force enabled");
-      }
+      if (!dir) {throw new Error("ERROR with deleteDir: dir is null");}
+      if (!this.dirExists(dir)) {throw new Error(`ERROR with deleteDir: The directory "${dir}" does not exist`);}
+      if (!this.isDirEmpty(dir) && !force) {throw new Error("ERROR with deleteDir: The directory your trying to delete is not empty to delete this folder you need force enabled");}
       fs.rmSync(dir, { recursive: true, force });
       return this;
    }
@@ -82,18 +70,10 @@ exports.DirectoryTools = class {
     * @returns {Array} An array filled with all the names of the files
     */
    getFileType(dir, fileType) {
-      if (!dir) {
-         throw new Error("ERROR with getFileType: dir is null");
-      }
-      if (!this.dirExists(dir)) {
-         throw new Error(`ERROR with getFileType: The directory "${dir}" does not exist`);
-      }
-      if (this.isDirEmpty(dir)) {
-         throw new Error("ERROR with getFileType: The directory you are trying to retrieve files from is empty");
-      }
-      if (!fileType) {
-         throw new Error("ERROR with getFileTypes: fileType is not specified");
-      }
+      if (!dir) {throw new Error("ERROR with getFileType: dir is null");}
+      if (!this.dirExists(dir)) {throw new Error(`ERROR with getFileType: The directory "${dir}" does not exist`);}
+      if (this.isDirEmpty(dir)) {throw new Error("ERROR with getFileType: The directory you are trying to retrieve files from is empty");}
+      if (!fileType) {throw new Error("ERROR with getFileTypes: fileType is not specified");}
       const array = [];
       for (const file of fs.readdirSync(dir)) {
          if (file.toLowerCase().endsWith(fileType.toLowerCase())) {
@@ -110,15 +90,9 @@ exports.DirectoryTools = class {
     * @returns {this} An instance of DirectoryTools
     */
    renameDir(dir, newName) {
-      if (!dir) {
-         throw new Error("ERROR with renameDir: dir is null");
-      }
-      if (!newName) {
-         throw new Error("ERROR with renameDir: newName is null");
-      }
-      if (!this.dirExists(dir)) {
-         throw new Error(`ERROR with renameDir: The directory "${dir}" not exist`);
-      }
+      if (!dir) {throw new Error("ERROR with renameDir: dir is null");}
+      if (!newName) {throw new Error("ERROR with renameDir: newName is null");}
+      if (!this.dirExists(dir)) {throw new Error(`ERROR with renameDir: The directory "${dir}" not exist`);}
       fs.renameSync(dir, dir.replace(dir.split(/[\\/]/).pop(), newName));
       return this;
    }
@@ -130,15 +104,9 @@ exports.DirectoryTools = class {
     * @returns {this} An instance of DirectoryTools
     */
    moveDir(dir, newDir, overwrite = false) {
-      if (!dir) {
-         throw new Error("ERROR with moveDir: dir is null");
-      }
-      if (!newDir) {
-         throw new Error("ERROR with moveDir: newDir is null");
-      }
-      if (!this.dirExists(dir)) {
-         throw new Error(`ERROR with moveDir: The directory "${dir}" does not exist`);
-      }
+      if (!dir) {throw new Error("ERROR with moveDir: dir is null");}
+      if (!newDir) {throw new Error("ERROR with moveDir: newDir is null");}
+      if (!this.dirExists(dir)) {throw new Error(`ERROR with moveDir: The directory "${dir}" does not exist`);}
       fse.moveSync(dir, newDir, {overwrite});
       return this;
    }
@@ -153,12 +121,8 @@ exports.DirectoryTools = class {
     * @returns {this} An instance of DirectoryTools
     */
    copyDir(dir, settings = {copyDir: null, overwrite: false}) {
-      if (!dir) {
-         throw new Error("ERROR with copyDir: dir is null");
-      }
-      if (!this.dirExists(dir)) {
-         throw new Error(`ERROR with copyDir: The directory "${dir}" does not exist`);
-      }
+      if (!dir) {throw new Error("ERROR with copyDir: dir is null");}
+      if (!this.dirExists(dir)) {throw new Error(`ERROR with copyDir: The directory "${dir}" does not exist`);}
       if (!settings.copyDir) {
          const folderName = dir.split("/").pop();
          if (this.dirExists(dir.replace(`${folderName}`, `${folderName} - copy`)) && !settings.overwrite) {
@@ -183,12 +147,8 @@ exports.DirectoryTools = class {
     * @returns {this} An instance of DirectoryTools
     */
    emptyDir(dir) {
-      if (!dir) {
-         throw new Error("ERROR with emptyDir: dir is null");
-      }
-      if (!this.dirExists(dir)) {
-         throw new Error(`ERROR with emptyDir: The directory "${dir}" does not exist`);
-      }
+      if (!dir) {throw new Error("ERROR with emptyDir: dir is null");}
+      if (!this.dirExists(dir)) {throw new Error(`ERROR with emptyDir: The directory "${dir}" does not exist`);}
       fse.emptyDirSync(dir);
       return this;
    }

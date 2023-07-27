@@ -46,12 +46,8 @@ exports.JsonFileTools = class {
     * @returns {Object} The data from the file
     */
    readFile(path, callback) {
-      if (!path) {
-         throw new Error("ERROR with readFile: path is null");
-      }
-      if (!new FileTools().fileExists(path)) {
-         throw new Error(`ERROR with readFile: The provided file does not exists`);
-      }
+      if (!path) {throw new Error("ERROR with readFile: path is null");}
+      if (!new FileTools().fileExists(path)) {throw new Error(`ERROR with readFile: The provided file does not exists`);}
       if (!callback) {
          try {
             return rJson(path);
@@ -62,7 +58,7 @@ exports.JsonFileTools = class {
       rJson(path, function (err, data) {
             data = err ? {} : data;
             callback(null, data);
-      })
+      });
    }
    /**
     * Returns the data from all the json files in a folder either as a map or array
@@ -72,15 +68,9 @@ exports.JsonFileTools = class {
     * @returns {Map | Array} The data returned
     */
    readAllFiles(dir, format = "Map") {
-      if (!dir) {
-         throw new Error("ERROR with readAllFiles: dir is null");
-      }
-      if (!fs.statSync(dir).isDirectory()) {
-         throw new Error("ERROR with readAllFiles: The path you have provided is not to a directory");
-      }
-      if (!new DirectoryTools().dirExists(dir)) {
-         throw new Error(`ERROR with readAllFiles: The provided folder does not exists`);
-      }
+      if (!dir) {throw new Error("ERROR with readAllFiles: dir is null");}
+      if (!fs.statSync(dir).isDirectory()) {throw new Error("ERROR with readAllFiles: The path you have provided is not to a directory");}
+      if (!new DirectoryTools().dirExists(dir)) {throw new Error(`ERROR with readAllFiles: The provided folder does not exists`);}
       if (format === "Array") {
          const array = new Array();
          for (const file of fs.readdirSync(dir)) {
@@ -100,7 +90,6 @@ exports.JsonFileTools = class {
          for (const file of fs.readdirSync(dir)) {
             if (file.toLowerCase().endsWith(".json")) {
                map.set(file.toLowerCase().replace(".json", ""), rJson(`${dir}/${file}`));
-
             }
             void(0);
          }
@@ -114,15 +103,9 @@ exports.JsonFileTools = class {
     * @returns {Array} An array of names
     */
    getFiles(dir) {
-      if (!dir) {
-         throw new Error("ERROR with getFiles: dir is null");
-      }
-      if (!fs.statSync(dir).isDirectory()) {
-         throw new Error("ERROR with getFile: The path you have provided is not to a directory");
-      }
-      if (!new DirectoryTools().dirExists(dir)) {
-         throw new Error("ERROR with getFile: There is no dir at the path you have provided");
-      }
+      if (!dir) {throw new Error("ERROR with getFiles: dir is null");}
+      if (!fs.statSync(dir).isDirectory()) {throw new Error("ERROR with getFile: The path you have provided is not to a directory");}
+      if (!new DirectoryTools().dirExists(dir)) {throw new Error("ERROR with getFile: There is no dir at the path you have provided");}
       const array = [];
       for (const file of fs.readdirSync(dir)) {
          if (file.toLowerCase().endsWith(".json")) {
