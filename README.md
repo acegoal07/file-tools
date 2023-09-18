@@ -20,6 +20,10 @@
 ```sh
 npm i @acegoal07/file-tools
 ```
+yarn
+```sh
+yarn add @acegoal07/file-tools
+```
 
 ## About
 This package is still a working progress and support for specific tools for more file types will be added, if you are wanting support for specific tools or support for a specific file type request the feature with an issue report and it will be added
