@@ -7,11 +7,11 @@ function logFormatter(testName, value = false) {
    console.log(`| ${testName}${" ".repeat((topBottomSize - testName.length))} | ${value ? "\x1b[92mPASSED\x1b[0m" : "\x1b[91mFAILED\x1b[0m"} |`);
 }
 // Directory Tools tests ////////////////////////////////////////////////
-console.log(topBottom);
-console.log("| DirectoryTools               |        |");
-console.log(topBottom);
-console.log("|             TEST             | STATUS |");
-console.log(topBottom);
+console.log(`${topBottom}
+   | DirectoryTools               |        |
+   ${topBottom}
+   |             TEST             | STATUS |
+   ${topBottom}`);
 // Create directory /////////////////////////////////////////////////////
 try {
    DirectoryTools().createDir("testFiles");

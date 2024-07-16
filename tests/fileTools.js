@@ -1,17 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////
 const { FileTools } = require("../dist");
-const top_bottom_size = 28;
-const top_bottom = `|${"-".repeat(top_bottom_size + 2)}|--------|`;
+const topBottomSize = 28;
+const topBottom = `|${"-".repeat(topBottomSize + 2)}|--------|`;
 // Log output ////////////////////////////////////////////////////////////
 function logFormatter(testName, value = false) {
-   console.log(`| ${testName}${" ".repeat((top_bottom_size - testName.length))} | ${value ? "\x1b[92mPASSED\x1b[0m" : "\x1b[91mFAILED\x1b[0m"} |`);
+   console.log(`| ${testName}${" ".repeat((topBottomSize - testName.length))} | ${value ? "\x1b[92mPASSED\x1b[0m" : "\x1b[91mFAILED\x1b[0m"} |`);
 }
 // File Tools tests /////////////////////////////////////////////////////
-console.log(top_bottom);
-console.log("| FileTools                    |        |");
-console.log(top_bottom);
-console.log("|             TEST             | STATUS |");
-console.log(top_bottom);
+console.log(`${topBottom}
+   | FileTools                    |        |
+   ${topBottom}
+   |             TEST             | STATUS |
+   ${topBottom}`);
 // Create file /////////////////////////////////////////////////////////
 try {
    FileTools().createFile("test.txt");
@@ -106,4 +106,4 @@ try {
 // Cleanup /////////////////////////////////////////////////////////////
 FileTools().deleteFile("test2.txt");
 FileTools().deleteFile("testTxt.txt");
-console.log(top_bottom);
+console.log(topBottom);
