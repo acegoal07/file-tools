@@ -8,11 +8,10 @@
       "url": "git+https://github.com/acegoal07/file-tools.git"
    },
    "scripts": {
-      "build": "npm run buildTypes && cls && npm run tscBuild && cls && npm run copyFiles",
+      "build": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types && cls && npx tsc && cls && xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist",
       "build+publish": "npm run build && cls && cd dist && cls && npm publish",
-      "buildTypes": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types",
-      "tscBuild": "npx tsc",
-      "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist"
+      "runTests": "npm i && node tests/fileTools.js && node tests/directoryTools.js && npx rimraf node_modules && npx rimraf package-lock.json",
+      "build+test": "npm run build && cls && npm test"
    },
    "keywords": [
       "acegoal07",

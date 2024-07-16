@@ -16,9 +16,9 @@ exports.FileTools = class {
     * @returns {this} An instance of FileTools
     */
    createFile(path, data = null) {
-      if (!path) {throw new Error("ERROR with createFile: path is null");}
-      if (this.fileExists(path)) {throw new Error(`ERROR with createFile: File "${path}" already exists`);}
-      fs.writeFileSync(path, data ? data : "");
+      if (!path) { throw new Error("ERROR with createFile: path is null"); }
+      if (this.fileExists(path)) { throw new Error(`ERROR with createFile: File "${path}" already exists`); }
+      fs.writeFileSync(path, !data ? "" : data);
       return this;
    }
    /**
@@ -28,9 +28,10 @@ exports.FileTools = class {
     * @returns {this} An instance of FileTools
     */
    deleteFile(path) {
-      if (!path) {throw new Error("ERROR with deleteFile: path is null");}
-      if (!this.fileExists(path)) {throw new Error(`ERROR with deleteFile: File "${path}" does not exists`);}
-      return fs.unlinkSync(path);
+      if (!path) { throw new Error("ERROR with deleteFile: path is null"); }
+      if (!this.fileExists(path)) { throw new Error(`ERROR with deleteFile: File "${path}" does not exists`); }
+      fs.unlinkSync(path);
+      return this;
    }
    /**
     * Moves the file from the old location to the new location
@@ -41,10 +42,10 @@ exports.FileTools = class {
     * @returns {this} An instance of FileTools
     */
    moveFile(path, newDir, overwrite = false) {
-      if (!path) {throw new Error("ERROR with moveFile: oldPath is null");}
-      if (!this.fileExists(path)) {throw new Error(`ERROR with moveFile: File "${path}" does not exists`);}
-      if (!newDir) {throw new Error("ERROR with moveFile: newPath is null");}
-      fse.moveSync(path, newDir, {overwrite});
+      if (!path) { throw new Error("ERROR with moveFile: oldPath is null"); }
+      if (!this.fileExists(path)) { throw new Error(`ERROR with moveFile: File "${path}" does not exists`); }
+      if (!newDir) { throw new Error("ERROR with moveFile: newPath is null"); }
+      fse.moveSync(path, newDir, { overwrite });
       return this;
    }
    /**
@@ -57,9 +58,9 @@ exports.FileTools = class {
     * }} settings Additional settings that can be used in the process
     * @returns {this} An instance of FileTools
     */
-   copyFile(path, settings = {copyPath: null, overwrite: false}) {
-      if (!path) {throw new Error("ERROR with copyFile: path is null");}
-      if (!this.fileExists(path)) {throw new Error(`ERROR with copyFile: File "${path}" does not exists`);}
+   copyFile(path, settings = { copyPath: null, overwrite: false }) {
+      if (!path) { throw new Error("ERROR with copyFile: path is null"); }
+      if (!this.fileExists(path)) { throw new Error(`ERROR with copyFile: File "${path}" does not exists`); }
       if (!settings.copyPath) {
          const fileName = path.split("/").pop().split(".")[0];
          if (this.fileExists(path.replace(`${fileName}`, `${fileName} - copy`)) && !settings.overwrite) {
@@ -70,24 +71,24 @@ exports.FileTools = class {
                }
             }
          } else {
-            fse.copySync(path, path.replace(`${fileName}`, `${fileName} - copy`), {overwrite: settings.overwrite});
+            fse.copySync(path, path.replace(`${fileName}`, `${fileName} - copy`), { overwrite: settings.overwrite });
          }
       } else {
-         fse.copySync(path, settings.copyPath, {overwrite: settings.overwrite});
+         fse.copySync(path, settings.copyPath, { overwrite: settings.overwrite });
       }
       return this;
    }
    /**
     * Renames the specified file to the new provided name
     *
-    * @param {String} path The path to the file you want to rename
+    * @param {String | RegExp} path The path to the file you want to rename
     * @param {String} newName The name you want to change the file to
     * @returns {this} An instance of FileTools
     */
    renameFile(path, newName) {
-      if (!path) {throw new Error("ERROR with renameFile: path is null");}
-      if (!this.fileExists(path)) {throw new Error(`ERROR with renameFile: File "${path}" does not exists`);}
-      if (!newName) {throw new Error("ERROR with renameFile: newName is null")}
+      if (!path) { throw new Error("ERROR with renameFile: path is null"); }
+      if (!this.fileExists(path)) { throw new Error(`ERROR with renameFile: File "${path}" does not exists`); }
+      if (!newName) { throw new Error("ERROR with renameFile: newName is null") }
       fs.renameSync(path, path.replace(path.split(/[\\/]/).pop(), newName));
       return this;
    }
@@ -98,7 +99,7 @@ exports.FileTools = class {
     * @returns {Boolean} A boolean
     */
    fileExists(path) {
-      if (!path) {throw new Error("ERROR with fileExist: path is null");}
+      if (!path) { throw new Error("ERROR with fileExist: path is null"); }
       try {
          if (fs.existsSync(path)) {
             if (!fs.statSync(path).isFile()) {
@@ -107,7 +108,7 @@ exports.FileTools = class {
             return true;
          }
          return false;
-      } catch(error) {
+      } catch (error) {
          return false;
       }
    }
@@ -118,7 +119,7 @@ exports.FileTools = class {
     * @returns The data from the file
     */
    readFile(path) {
-      if (!path) {throw new Error("ERROR with readFile: path is null");}
+      if (!path) { throw new Error("ERROR with readFile: path is null"); }
       return fs.readFileSync(path, 'utf8');
    }
    /**
@@ -129,8 +130,8 @@ exports.FileTools = class {
     * @returns {this} An instance of FileTools
     */
    writeFile(path, data) {
-      if (!path) {throw new Error("ERROR with writeFile: path is null");}
-      if (!data) {throw new Error("ERROR with writeFile: data is null");}
+      if (!path) { throw new Error("ERROR with writeFile: path is null"); }
+      if (!data) { throw new Error("ERROR with writeFile: data is null"); }
       fs.writeFileSync(path, typeof data == "object" ? JSON.stringify(data, null, 2) : data);
       return this;
    }
@@ -142,8 +143,8 @@ exports.FileTools = class {
     * @returns {this} An instance of FileTools
     */
    writeCopy(path, copyPath) {
-      if (!path) {throw new Error("ERROR with writeFile: path is null");}
-      if (!copyPath) {throw new Error("ERROR with writeFile: copyPath is null");}
+      if (!path) { throw new Error("ERROR with writeFile: path is null"); }
+      if (!copyPath) { throw new Error("ERROR with writeFile: copyPath is null"); }
       this.writeFile(copyPath, fs.readFileSync(path, 'utf8'));
       return this;
    }
@@ -154,7 +155,7 @@ exports.FileTools = class {
     * @returns {this} An instance of FileTools
     */
    blankFile(path) {
-      if (!path) {throw new Error("ERROR with blankFile: path is null");}
+      if (!path) { throw new Error("ERROR with blankFile: path is null"); }
       this.writeFile(path, "");
       return this;
    }

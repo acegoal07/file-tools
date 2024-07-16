@@ -1,24 +1,24 @@
 ///////////////////////////////////////////////////////////////////////////
 const { DirectoryTools, FileTools } = require("../dist");
-const top_bottom_size = 28;
-const top_bottom = `|${"-".repeat(top_bottom_size + 2)}|--------|`;
+const topBottomSize = 28;
+const topBottom = `|${"-".repeat(topBottomSize + 2)}|--------|`;
 // Log output ////////////////////////////////////////////////////////////
-function logFormatter (testName, value = false) {
-    console.log(`| ${testName}${" ".repeat((top_bottom_size - testName.length))} | ${value? "\x1b[92mPASSED\x1b[0m" : "\x1b[91mFAILED\x1b[0m"} |`);
+function logFormatter(testName, value = false) {
+   console.log(`| ${testName}${" ".repeat((topBottomSize - testName.length))} | ${value ? "\x1b[92mPASSED\x1b[0m" : "\x1b[91mFAILED\x1b[0m"} |`);
 }
 // Directory Tools tests ////////////////////////////////////////////////
-console.log(top_bottom);
+console.log(topBottom);
 console.log("| DirectoryTools               |        |");
-console.log(top_bottom);
+console.log(topBottom);
 console.log("|             TEST             | STATUS |");
-console.log(top_bottom);
+console.log(topBottom);
 // Create directory /////////////////////////////////////////////////////
 try {
    DirectoryTools().createDir("testFiles");
    if (DirectoryTools().dirExists("testFiles")) {
-       logFormatter('Directory creation', true);
+      logFormatter('Directory creation', true);
    } else {
-       logFormatter('Directory creation');
+      logFormatter('Directory creation');
    }
 } catch (error) {
    logFormatter('Directory creation');
@@ -57,19 +57,19 @@ try {
    } else {
       logFormatter('Copy Directory 1');
    }
-   DirectoryTools().copyDir("testFiles", {copyDir: "newTestFiles"});
+   DirectoryTools().copyDir("testFiles", { copyDir: "newTestFiles" });
    if (DirectoryTools().dirExists("newTestFiles")) {
       logFormatter('Copy Directory 2', true);
    } else {
       logFormatter('Copy Directory 2');
    }
-   DirectoryTools().copyDir("testFiles", {copyDir: "newTestFiles/folder"});
+   DirectoryTools().copyDir("testFiles", { copyDir: "newTestFiles/folder" });
    if (DirectoryTools().dirExists("newTestFiles/folder")) {
       logFormatter('Copy Directory 3', true);
    } else {
       logFormatter('Copy Directory 3');
    }
-} catch(error) {
+} catch (error) {
    logFormatter('Copy Directory');
    throw new Error(error);
 }
@@ -81,7 +81,7 @@ try {
    } else {
       logFormatter('Empty directory');
    }
-} catch(error) {
+} catch (error) {
    logFormatter('Empty directory');
    throw new Error(error);
 }
@@ -93,7 +93,7 @@ try {
    } else {
       logFormatter('Rename directory');
    }
-} catch(error) {
+} catch (error) {
    logFormatter('Rename directory');
    throw new Error(error);
 }
@@ -105,7 +105,7 @@ try {
    } else {
       logFormatter('Move directory');
    }
-} catch(error) {
+} catch (error) {
    logFormatter('Move directory');
    throw new Error(error);
 }
@@ -123,4 +123,4 @@ try {
 }
 // Cleanup /////////////////////////////////////////////////////////////
 DirectoryTools().deleteDir("testFiles - copy", true);
-console.log(top_bottom);
+console.log(topBottom);

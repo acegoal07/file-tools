@@ -10,7 +10,7 @@ const { FileTools } = require("./lib/FileTools"),
  *
  * @returns {FileTools} An instance of the class
  */
-exports.FileTools = function() {
+exports.FileTools = function () {
    return new FileTools();
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ exports.FileTools = function() {
  *
  * @returns {DirectoryTools} An instance of the class
  */
-exports.DirectoryTools = function() {
+exports.DirectoryTools = function () {
    return new DirectoryTools();
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -30,6 +30,6 @@ exports.DirectoryTools = function() {
  *
  * @returns {JsonFileTools} An instance of the class
  */
-exports.JsonFileTools = function() {
+exports.JsonFileTools = function () {
    return new JsonFileTools();
 }

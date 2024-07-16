@@ -3,8 +3,8 @@ const { FileTools } = require("../dist");
 const top_bottom_size = 28;
 const top_bottom = `|${"-".repeat(top_bottom_size + 2)}|--------|`;
 // Log output ////////////////////////////////////////////////////////////
-function logFormatter (testName, value = false) {
-    console.log(`| ${testName}${" ".repeat((top_bottom_size - testName.length))} | ${value? "\x1b[92mPASSED\x1b[0m" : "\x1b[91mFAILED\x1b[0m"} |`);
+function logFormatter(testName, value = false) {
+   console.log(`| ${testName}${" ".repeat((top_bottom_size - testName.length))} | ${value ? "\x1b[92mPASSED\x1b[0m" : "\x1b[91mFAILED\x1b[0m"} |`);
 }
 // File Tools tests /////////////////////////////////////////////////////
 console.log(top_bottom);
@@ -34,9 +34,9 @@ try {
 try {
    FileTools().copyFile("test.txt");
    if (FileTools().fileExists("test - copy.txt")) {
-       logFormatter('File copy', true);
+      logFormatter('File copy', true);
    } else {
-       logFormatter('File copy');
+      logFormatter('File copy');
    }
 } catch (error) {
    logFormatter('File copy');
@@ -46,9 +46,9 @@ try {
 try {
    FileTools().renameFile("test.txt", "test2.txt");
    if (FileTools().fileExists("test2.txt")) {
-       logFormatter('Rename file', true);
+      logFormatter('Rename file', true);
    } else {
-       logFormatter('Rename file');
+      logFormatter('Rename file');
    }
 } catch (error) {
    logFormatter('Rename file');
@@ -58,9 +58,9 @@ try {
 try {
    FileTools().moveFile("test2.txt", "../test2.txt");
    if (FileTools().fileExists("../test2.txt")) {
-       logFormatter('Move file', true);
+      logFormatter('Move file', true);
    } else {
-       logFormatter('Move file');
+      logFormatter('Move file');
    }
    FileTools().moveFile("../test2.txt", "test2.txt");
 } catch (error) {
@@ -71,9 +71,9 @@ try {
 try {
    FileTools().writeFile("testTxt.txt", "passed");
    if (FileTools().readFile("testTxt.txt") === "passed") {
-       logFormatter('Write file', true);
+      logFormatter('Write file', true);
    } else {
-       logFormatter('Write file');
+      logFormatter('Write file');
    }
 } catch (error) {
    logFormatter('Write file');
@@ -83,9 +83,9 @@ try {
 try {
    FileTools().writeCopy("testTxt.txt", "test2.txt");
    if (FileTools().readFile("test2.txt") === "passed") {
-       logFormatter('Write copy', true);
+      logFormatter('Write copy', true);
    } else {
-       logFormatter('Write copy');
+      logFormatter('Write copy');
    }
 } catch (error) {
    logFormatter('Write copy');
@@ -95,9 +95,9 @@ try {
 try {
    FileTools().deleteFile("test - copy.txt");
    if (!FileTools().fileExists("test - copy.txt")) {
-       logFormatter('File deletion', true);
+      logFormatter('File deletion', true);
    } else {
-       logFormatter('File deletion');
+      logFormatter('File deletion');
    }
 } catch (error) {
    logFormatter('File deletion');
