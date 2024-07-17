@@ -1,8 +1,6 @@
-///////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////
 const fs = require("fs"),
    fse = require("fs-extra");
-///////////////////////////////////////////////////////////////////////////
 // Class /////////////////////////////////////////////////////////////////
 /**
  * The class for all file tools
@@ -10,7 +8,6 @@ const fs = require("fs"),
 exports.FileTools = class {
    /**
     * Creates a file at the location you provided
-    *
     * @param {String} path The path to the file you want to create
     * @param {String} data The data you want to put in the file
     * @returns {this} An instance of FileTools
@@ -23,7 +20,6 @@ exports.FileTools = class {
    }
    /**
     * Deletes the file you specify
-    *
     * @param {String} path The path to the file you want to delete
     * @returns {this} An instance of FileTools
     */
@@ -35,7 +31,6 @@ exports.FileTools = class {
    }
    /**
     * Moves the file from the old location to the new location
-    *
     * @param {String} path The path to the file you want to move
     * @param {String} newDir The path to the folder you want to move the file to
     * @param {Boolean} overwrite Whether or not to replace files with the same name
@@ -50,7 +45,6 @@ exports.FileTools = class {
    }
    /**
     * Duplicates the file you specify
-    *
     * @param {String} path The path to the file you want to copy
     * @param {{
     *    copyPath: String,
@@ -80,7 +74,6 @@ exports.FileTools = class {
    }
    /**
     * Renames the specified file to the new provided name
-    *
     * @param {String | RegExp} path The path to the file you want to rename
     * @param {String} newName The name you want to change the file to
     * @returns {this} An instance of FileTools
@@ -94,7 +87,6 @@ exports.FileTools = class {
    }
    /**
     * Returns a boolean whether or not the file exists
-    *
     * @param {String} path The path to the file you want to check
     * @returns {Boolean} A boolean
     */
@@ -114,7 +106,6 @@ exports.FileTools = class {
    }
    /**
     * Returns the data from the file you specify
-    *
     * @param {String} path The path to the txt file you want to read
     * @returns The data from the file
     */
@@ -124,7 +115,6 @@ exports.FileTools = class {
    }
    /**
     * Writes data to the file you specify
-    *
     * @param {String} path The path to the file you want to write the data to
     * @param data The data you want to write to the file
     * @returns {this} An instance of FileTools
@@ -137,7 +127,6 @@ exports.FileTools = class {
    }
    /**
     * Writes the data from one file to another
-    *
     * @param {String} path The path to the file you want to get the data from
     * @param {String} copyPath The path to the file you want to write the data to
     * @returns {this} An instance of FileTools
@@ -150,7 +139,6 @@ exports.FileTools = class {
    }
    /**
     * Removes all the data from a file
-    *
     * @param {String} path
     * @returns {this} An instance of FileTools
     */

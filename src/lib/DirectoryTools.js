@@ -1,8 +1,6 @@
-///////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////
 const fs = require("fs"),
    fse = require("fs-extra");
-///////////////////////////////////////////////////////////////////////////
 // Class /////////////////////////////////////////////////////////////////
 /**
  * The class for all directory tools
@@ -10,7 +8,6 @@ const fs = require("fs"),
 exports.DirectoryTools = class {
    /**
     * Returns a boolean whether or not the directory exists
-    *
     * @param {String} dir The path to the directory you want to check
     * @returns {Boolean} A boolean
     */
@@ -30,7 +27,6 @@ exports.DirectoryTools = class {
    }
    /**
     * Creates a folder where you specify
-    *
     * @param {String} dir The path to where you want the folder created
     * @returns {this} An instance of DirectoryTools
     */
@@ -41,7 +37,6 @@ exports.DirectoryTools = class {
    }
    /**
     * Deletes specified directory
-    *
     * @param {String} dir The path to the folder you want deleted
     * @param {Boolean} force Whether or not it should force delete the folder
     * @returns {this} An instance of DirectoryTools
@@ -55,7 +50,6 @@ exports.DirectoryTools = class {
    }
    /**
     * Checks whether or not the folder specified contains any files
-    *
     * @param {String} dir The path to the folder you want to check
     * @returns {Boolean} Whether or not the directory is empty
     */
@@ -64,7 +58,6 @@ exports.DirectoryTools = class {
    }
    /**
     * Returns an array of file names with the specified file type
-    *
     * @param {String} dir The path to the directory you want to search
     * @param {String} fileType The file type you want to get the names of
     * @returns {Array} An array filled with all the names of the files
@@ -84,7 +77,6 @@ exports.DirectoryTools = class {
    }
    /**
     * Renames the directory you specify
-    *
     * @param {String | RegExp} dir The path to the directory
     * @param {String} newName The new name you want to give the directory
     * @returns {this} An instance of DirectoryTools
@@ -97,7 +89,7 @@ exports.DirectoryTools = class {
       return this;
    }
    /**
-    *
+    * Move the directory to a new specified location
     * @param {String} dir The path to the directory
     * @param {String} newDir The new path of the directory
     * @param {Boolean} overwrite Whether or not to replace files with the same name
@@ -111,7 +103,7 @@ exports.DirectoryTools = class {
       return this;
    }
    /**
-    *
+    * Used to make a copy of a directory
     * @param {String} dir The path to the directory
     * @param {String} copyDir The to the copy directory
     * @param {{
@@ -142,7 +134,6 @@ exports.DirectoryTools = class {
    }
    /**
     * Ensures that there are no files in a directory and deletes any files if there are some
-    *
     * @param {String} dir The path to the directory you want to empty
     * @returns {this} An instance of DirectoryTools
     */

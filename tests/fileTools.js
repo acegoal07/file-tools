@@ -8,10 +8,10 @@ function logFormatter(testName, value = false) {
 }
 // File Tools tests /////////////////////////////////////////////////////
 console.log(`${topBottom}
-   | FileTools                    |        |
-   ${topBottom}
-   |             TEST             | STATUS |
-   ${topBottom}`);
+| FileTools                    |        |
+${topBottom}
+|             TEST             | STATUS |
+${topBottom}`);
 // Create file /////////////////////////////////////////////////////////
 try {
    FileTools().createFile("test.txt");

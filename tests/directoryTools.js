@@ -8,10 +8,10 @@ function logFormatter(testName, value = false) {
 }
 // Directory Tools tests ////////////////////////////////////////////////
 console.log(`${topBottom}
-   | DirectoryTools               |        |
-   ${topBottom}
-   |             TEST             | STATUS |
-   ${topBottom}`);
+| DirectoryTools               |        |
+${topBottom}
+|             TEST             | STATUS |
+${topBottom}`);
 // Create directory /////////////////////////////////////////////////////
 try {
    DirectoryTools().createDir("testFiles");
