@@ -9,9 +9,10 @@
    },
    "scripts": {
       "build": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types && cls && npx tsc && cls && xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist",
-      "build+publish": "npm run build && cls && cd dist && cls && npm publish",
+      "build+publish": "npm run build && cls && cd dist && cls && npm publish && npm run cleanOldBuilds",
       "runTests": "npm i && cls && node tests/fileTools.js && node tests/directoryTools.js && npx rimraf node_modules && npx rimraf package-lock.json",
-      "build+test": "npm run build && cls && npm run runTests"
+      "build+test": "npm run build && cls && npm run runTests",
+      "cleanOldBuilds": "npx rimraf dist && npx rimraf types"
    },
    "keywords": [
       "acegoal07",
